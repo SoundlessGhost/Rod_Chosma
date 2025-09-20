@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useMemo } from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/app/_context/CartContext";
 import { Card, CardContent } from "@/components/ui/card";
 
 const useCurrency = (currency = "USD", locale = "en-US") =>
@@ -20,6 +21,8 @@ const useCurrency = (currency = "USD", locale = "en-US") =>
 
 export default function ProductSectionsClient({ sections }) {
   const fmt = useCurrency("USD");
+
+  const { addToCart } = useCart();
 
   return (
     <section className="py-28 bg-background">
@@ -95,7 +98,8 @@ export default function ProductSectionsClient({ sections }) {
                         </div>
                         <Button
                           size="sm"
-                          className="bg-primary cursor-pointer hover:bg-primary/90 text-primary-foreground"
+                          onClick={() => addToCart(p)}
+                          className="bg-primary cursor-pointer text-white hover:bg-primary/90"
                         >
                           Add to Cart
                         </Button>

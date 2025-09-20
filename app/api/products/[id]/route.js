@@ -1,8 +1,11 @@
+// app/api/products/[id]/route.ts
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-import { NextResponse } from "next/server";
+export const runtime = "nodejs"; // Prisma requires Node runtime
+export const dynamic = "force-dynamic"; // avoid caching in dev
 
-export async function GET(req, { params }) {
+export async function GET(_req, { params }) {
   try {
     const id = parseInt(params.id, 10);
     if (isNaN(id)) {
@@ -14,7 +17,7 @@ export async function GET(req, { params }) {
 
     const product = await prisma.product.findUnique({
       where: { id },
-      include: { category: true },
+      include: { category: true }, // this matches your schema
     });
 
     if (!product) {
@@ -25,10 +28,11 @@ export async function GET(req, { params }) {
     }
 
     return NextResponse.json({ ok: true, data: product });
-  } catch (error) {
-    console.error("GET /api/products/[id] error:", error);
+  } catch (err) {
+    console.error("GET /api/products/[id] error:", err);
+    // return the actual Prisma error message so you see what’s wrong
     return NextResponse.json(
-      { ok: false, error: "Failed to fetch product" },
+      { ok: false, error: err.message || "Unexpected error" },
       { status: 500 }
     );
   }
