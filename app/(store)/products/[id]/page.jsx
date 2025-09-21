@@ -3,8 +3,8 @@ import { headers } from "next/headers";
 import ProductIdSectionsClient from "../../_components/ProductIdSectionsClient";
 
 // ✅ utility: absolute URL
-function absoluteUrl(path = "") {
-  const h = headers();
+async function absoluteUrl(path = "") {
+  const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host");
   const proto = h.get("x-forwarded-proto") ?? "http";
   return `${proto}://${host}${path}`;
@@ -12,7 +12,7 @@ function absoluteUrl(path = "") {
 
 // ✅ server data fetch
 async function getProduct(id) {
-  const base = absoluteUrl();
+  const base = await absoluteUrl();
   const res = await fetch(`${base}/api/products/${id}`, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to load product");
   const json = await res.json();
@@ -20,7 +20,8 @@ async function getProduct(id) {
 }
 
 export default async function ProductIdPage({ params }) {
-  const product = await getProduct(params.id);
+  const { id } = params;
+  const product = await getProduct(id);
 
   return (
     <div className="container mx-auto px-4 py-10">

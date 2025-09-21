@@ -14,19 +14,19 @@ model Category {
 }
 
 model Product {
-  id             Int       @id @default(autoincrement())
-  name           String
-  price          Float
-  originalPrice  Float?
-  image          String
-  secondaryImages String[]   // multiple images
-  rating         Float
-  reviews        Int
-  badge          String?
-  sizes          String[]    // multiple sizes like ["S","M","L","XL"]
+  id              String   @id @default(uuid())
+  reviews         Int
+  price           Float
+  rating          Float
+  originalPrice   Float?
+  name            String
+  image           String
+  badge           String?
+  secondaryImages String[] // multiple images
+  sizes           String[] // multiple sizes like ["S","M","L","XL"]
 
   // relation
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
-  createdAt DateTime @default(now())
+  createdAt  DateTime @default(now())
 }

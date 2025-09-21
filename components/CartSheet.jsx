@@ -63,7 +63,7 @@ export default function CartSheet() {
             </SheetHeader>
           </div>
         )}
-
+        {/* TODO Product data not why? */}
         {/* Body */}
         {cart.length === 0 ? (
           // Empty view vertically centered
@@ -95,9 +95,9 @@ export default function CartSheet() {
           // Products list (always starts from top)
           <div className="flex-1  overflow-y-auto px-4 py-3">
             <ul className="space-y-3">
-              {cart.map((item) => (
+              {cart.map((item, i) => (
                 <li
-                  key={item.id}
+                  key={i}
                   className="flex hover:bg-gray-50 p-2 rounded-lg gap-3"
                 >
                   {/* thumb */}
@@ -107,8 +107,8 @@ export default function CartSheet() {
                       className="relative w-14 h-14 rounded-sm overflow-hidden shrink-0"
                     >
                       <Image
-                        src={item.image}
-                        alt={item.name}
+                        src={item.image || "/placeholder.png"}
+                        alt={item.name || "Product image"}
                         fill
                         className="object-cover"
                       />

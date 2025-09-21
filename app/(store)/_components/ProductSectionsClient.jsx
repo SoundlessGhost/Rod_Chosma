@@ -27,8 +27,8 @@ export default function ProductSectionsClient({ sections }) {
   return (
     <section className="py-28 bg-background">
       <div className="container mx-auto px-4">
-        {sections.map((section) => (
-          <div key={section.title}>
+        {sections.map((section,i) => (
+          <div key={i}>
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold mb-4 text-foreground">
                 {section.title}
