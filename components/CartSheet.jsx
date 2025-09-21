@@ -33,7 +33,7 @@ export default function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button
+        {/* <button
           aria-label="Open cart"
           className="relative p-2 cursor-pointer text-gray-700 hover:text-teal-700"
         >
@@ -43,6 +43,13 @@ export default function CartSheet() {
               {cart.length}
             </span>
           )}
+        </button> */}
+        <button
+          aria-label="Open navigation"
+          className="inline-flex ml-2 items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white"
+          type="button"
+        >
+          <ShoppingCart className="size-4 " />
         </button>
       </SheetTrigger>
 

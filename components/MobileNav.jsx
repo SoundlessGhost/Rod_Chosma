@@ -34,12 +34,19 @@ export default function MobileNav() {
     <Sheet>
       <SheetTrigger asChild>
         <button
+          aria-label="Open navigation"
+          className="inline-flex items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white md:hidden"
+          type="button"
+        >
+          <Menu className="size-4" />
+        </button>
+        {/* <button
           aria-label="Open menu"
           className="md:hidden cursor-pointer inline-flex items-center justify-center rounded-md border
                      border-gray-200 p-2 hover:bg-gray-50"
         >
           <Menu size={20} />
-        </button>
+        </button> */}
       </SheetTrigger>
 
       {/* grid = header | body (scroll) | footer (fixed) */}
