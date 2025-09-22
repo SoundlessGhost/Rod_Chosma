@@ -4,9 +4,12 @@ import Image from "next/image";
 
 import { useMemo } from "react";
 import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/app/_context/CartContext";
 import { Card, CardContent } from "@/components/ui/card";
+
+const ACCENT = "#e95d4f"; // hero highlight color
 
 const useCurrency = (currency = "USD", locale = "en-US") =>
   useMemo(
@@ -20,86 +23,117 @@ const useCurrency = (currency = "USD", locale = "en-US") =>
   );
 
 export default function ProductSectionsClient({ sections }) {
+  const router = useRouter();
   const fmt = useCurrency("USD");
 
   const { addToCart } = useCart();
 
   return (
-    <section className="py-28 bg-background">
-      <div className="container mx-auto px-4">
-        {sections.map((section,i) => (
-          <div key={i}>
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-foreground">
+    <section className="relative py-24 bg-[#0f1210] text-white">
+      {/* subtle vignette to echo hero gradients */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+
+      <div className="container relative mx-auto px-4">
+        {sections.map((section, i) => (
+          <div key={i} className="mb-20">
+            {/* Section header */}
+            <div className="text-center mb-10">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="rounded-full border border-white/20 px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70">
+                  ROD | CHOSMA
+                </span>
+                <span className="hidden h-px w-40 bg-white/10 sm:block" />
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl font-semibold uppercase tracking-[0.2em]">
                 {section.title}
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="mt-3 text-sm sm:text-base text-white/70">
                 {section.title === "Best Sellers"
                   ? "Our most loved sunglasses, chosen by thousands of satisfied customers worldwide."
                   : "Fresh designs that define the future of eyewear fashion and functionality."}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Grid */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
               {section.products.map((p) => (
                 <Card
                   key={p.id}
-                  className="group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-card border-border p-0"
+                  className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5/50 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
                 >
                   <CardContent className="p-0">
-                    <div className="relative overflow-hidden rounded-t-lg w-full h-52">
+                    {/* Image */}
+                    <div
+                      onClick={() => router.push(`/products/${p.id}`)}
+                      className="relative h-52 w-full overflow-hidden cursor-pointer"
+                    >
                       <Image
                         src={p.image}
                         alt={p.name}
                         fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 25vw"
+                        priority={false}
                       />
                       {p.badge && (
-                        <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-medium px-2 py-1 rounded-full shadow">
+                        <span
+                          className="absolute left-3 top-3 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-white shadow"
+                          style={{ backgroundColor: `${ACCENT}` }}
+                        >
                           {p.badge}
                         </span>
                       )}
+                      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
 
+                    {/* Body */}
                     <div className="p-4">
-                      <h3 className="font-semibold text-lg mb-2 text-card-foreground">
+                      <h3 className="mb-2 line-clamp-1 text-lg font-semibold text-white">
                         {p.name}
                       </h3>
 
-                      <div className="flex items-center mb-2">
+                      {/* Rating */}
+                      <div className="mb-3 flex items-center">
                         <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < Math.floor(p.rating || 0)
-                                  ? "text-yellow-400 fill-current"
-                                  : "text-gray-300"
-                              }`}
-                            />
-                          ))}
+                          {[...Array(5)].map((_, i) => {
+                            const filled = i < Math.floor(p.rating || 0);
+                            return (
+                              <Star
+                                key={i}
+                                className={`h-4 w-4 ${
+                                  filled ? "text-yellow-400" : "text-white/25"
+                                }`}
+                                {...(filled ? { fill: "currentColor" } : {})}
+                              />
+                            );
+                          })}
                         </div>
-                        <span className="text-sm text-muted-foreground ml-2">
+                        <span className="ml-2 text-xs text-white/60">
                           {p.rating} ({p.reviews})
                         </span>
                       </div>
 
+                      {/* Price + CTA */}
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-xl font-bold text-card-foreground">
+                        <div className="flex items-baseline space-x-2">
+                          <span
+                            className="text-xl font-bold"
+                            style={{ color: ACCENT }}
+                          >
                             {fmt.format(p.price)}
                           </span>
                           {p.originalPrice && (
-                            <span className="text-sm text-muted-foreground line-through">
+                            <span className="text-sm text-white/40 line-through">
                               {fmt.format(p.originalPrice)}
                             </span>
                           )}
                         </div>
+
                         <Button
                           size="sm"
                           onClick={() => addToCart(p)}
-                          className="bg-primary cursor-pointer text-white hover:bg-primary/90"
+                          className="cursor-pointer rounded-full border border-white/30 bg-transparent px-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white transition hover:border-white hover:bg-white/10"
                         >
                           Add to Cart
                         </Button>
@@ -110,11 +144,17 @@ export default function ProductSectionsClient({ sections }) {
               ))}
             </div>
 
-            <div className="text-center cursor-pointer my-12">
+            {/* View All */}
+            <div className="my-12 text-center">
               <Button
                 variant="outline"
                 size="lg"
-                className="border-primary cursor-pointer text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
+                onClick={() =>
+                  router.push(
+                    `/products?section=${encodeURIComponent(section.title)}`
+                  )
+                }
+                className="cursor-pointer rounded-full border border-white/30 bg-transparent px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-white transition hover:border-white hover:bg-white/10"
               >
                 View All {section.title}
               </Button>

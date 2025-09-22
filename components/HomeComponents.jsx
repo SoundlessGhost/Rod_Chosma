@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 
 import { motion } from "framer-motion";
-import { BatteryCharging, Camera, Menu, Sparkles } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { BatteryCharging, Camera, Sparkles } from "lucide-react";
 
 const featureHighlights = [
   {
@@ -30,6 +29,8 @@ const featureHighlights = [
 ];
 
 export default function HomeComponents() {
+  const router = useRouter(); // ✅ initialize
+
   return (
     <>
       <section className="relative isolate min-h-[90vh] overflow-hidden bg-[#0f1210] text-white">
@@ -118,7 +119,10 @@ export default function HomeComponents() {
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button className="h-12 cursor-pointer rounded-full bg-white px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-black transition hover:bg-white/90">
+                <Button
+                  onClick={() => router.push("/products")}
+                  className="h-12 cursor-pointer rounded-full bg-white px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-black transition hover:bg-white/90"
+                >
                   Shop Now
                 </Button>
                 <Button

@@ -14,9 +14,9 @@ const HeaderSection = () => {
   return (
     <header
       className="text-white"
-      style={{
-        backgroundImage: "url(/plan.jpg)",
-      }}
+      // style={{
+      //   backgroundImage: "url(/plan.jpg)",
+      // }}
     >
       <div className="bg-[#b8211f]  px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-[0.35em] sm:text-xs">
         Meet the new AI glasses Advanced AI Enhanced capture More battery.

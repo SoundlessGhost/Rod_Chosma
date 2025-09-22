@@ -1,6 +1,6 @@
-// prisma/seed.js
 const { PrismaClient } = require("@prisma/client");
 
+const slugify = require("slugify");
 const prisma = new PrismaClient();
 
 const productCategories = [
@@ -16,7 +16,7 @@ const productCategories = [
         rating: 4.9,
         reviews: 124,
         badge: "Bestseller",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
         name: "Urban Explorer",
@@ -26,7 +26,7 @@ const productCategories = [
         rating: 4.8,
         reviews: 89,
         badge: "Popular",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
         name: "Beach Vibes",
@@ -36,7 +36,7 @@ const productCategories = [
         rating: 4.7,
         reviews: 156,
         badge: "Summer Hit",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
         name: "Executive Elite",
@@ -46,7 +46,7 @@ const productCategories = [
         rating: 5.0,
         reviews: 67,
         badge: "Premium",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
     ],
   },
@@ -61,7 +61,7 @@ const productCategories = [
         rating: 4.9,
         reviews: 23,
         badge: "New",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
         name: "Minimalist Pro",
@@ -71,7 +71,7 @@ const productCategories = [
         rating: 4.8,
         reviews: 15,
         badge: "New",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
         name: "Retro Revival",
@@ -81,7 +81,7 @@ const productCategories = [
         rating: 4.6,
         reviews: 31,
         badge: "New",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
         name: "Sport Fusion",
@@ -91,30 +91,54 @@ const productCategories = [
         rating: 4.9,
         reviews: 19,
         badge: "New",
-        sizes: ["XS","S", "M", "L", "XL"],
+        sizes: ["XS", "S", "M", "L", "XL"],
       },
     ],
   },
 ];
 
+// async function main() {
+//   for (const category of productCategories) {
+//     await prisma.category.create({
+//       data: {
+//         title: category.title,
+//         products: { create: category.products },
+//       },
+//     });
+//   }
+// }
 async function main() {
   for (const category of productCategories) {
-    await prisma.category.create({
-      data: {
+    await prisma.category.upsert({
+      where: { title: category.title },
+      update: {
+        products: {
+          deleteMany: {}, // old products removed
+          create: category.products.map((p) => ({
+            ...p,
+            slug: slugify(p.name, { lower: true, strict: true }),
+          })),
+        },
+      },
+      create: {
         title: category.title,
-        products: { create: category.products },
+        products: {
+          create: category.products.map((p) => ({
+            ...p,
+            slug: slugify(p.name, { lower: true, strict: true }),
+          })),
+        },
       },
     });
   }
+  console.log("✅ Seed data upserted successfully!");
 }
 
 main()
-  .then(async () => {
-    console.log("✅ Seed data inserted!");
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
+  .catch((e) => {
     console.error(e);
-    await prisma.$disconnect();
     process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });

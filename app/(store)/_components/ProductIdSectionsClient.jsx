@@ -15,6 +15,7 @@ import { useCart } from "@/app/_context/CartContext";
 
 export default function ProductPage() {
   const router = useRouter();
+  
   const { addToCart } = useCart();
 
   // Product data

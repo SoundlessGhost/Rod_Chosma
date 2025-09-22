@@ -1,30 +1,70 @@
+// app/products/page.js
+export const runtime = "nodejs";
+
+import prisma from "@/lib/prisma";
 import ProductSectionsClient from "../_components/ProductSectionsClient";
 
-async function fetchSections() {
-  // 1) categories
-  const catRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/categories`,
-    { cache: "no-store" }
-  );
-  const catJson = await catRes.json();
-  const categories = (catJson.ok ? catJson.data : []) || [];
+export const revalidate = 300;
 
-  // 2) per category products
-  const promises = categories.map(async (c) => {
-    const url = `${
-      process.env.NEXT_PUBLIC_BASE_URL || ""
-    }/api/products?category=${encodeURIComponent(
-      c.title
-    )}&page=1&pageSize=8&sort=newest`;
-    const r = await fetch(url, { cache: "no-store" });
-    const j = await r.json();
-    return { title: c.title, products: (j.ok ? j.data : []) || [] };
-  });
-
-  return await Promise.all(promises);
+function serializeProduct(p) {
+  return {
+    ...p,
+    rating: p.rating != null ? Number(p.rating) : null, // Decimal -> number
+    createdAt: p.createdAt?.toISOString?.() ?? p.createdAt,
+  };
 }
 
-export default async function ProductPage() {
-  const sections = await fetchSections();
-  return <ProductSectionsClient sections={sections} />;
+export async function generateMetadata() {
+  return {
+    title: "All Products | RODCHOSMA",
+    description:
+      "Explore our best sellers and new arrivals of AI-enhanced eyewear.",
+    openGraph: {
+      title: "All Products | RODCHOSMA",
+      description: "Best sellers & new arrivals of eyewear.",
+      url: "/products",
+      type: "website",
+    },
+  };
+}
+
+export default async function ProductsPage() {
+  const categories = await prisma.category.findMany({
+    orderBy: { title: "asc" },
+    include: {
+      products: {
+        take: 8,
+        orderBy: { createdAt: "desc" },
+      },
+    },
+  });
+
+  const sections = categories.map((c) => ({
+    title: c.title,
+    products: c.products.map(serializeProduct),
+  }));
+
+  // JSON-LD (safe; only plain strings/numbers used)
+  const itemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: sections.flatMap((s) =>
+      s.products.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `/products/${p.slug ?? p.id}`,
+        name: p.name,
+      }))
+    ),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
+      />
+      <ProductSectionsClient sections={sections} />
+    </>
+  );
 }

@@ -9,24 +9,25 @@ datasource db {
 
 model Category {
   id       Int       @id @default(autoincrement())
-  title    String
+  title    String    @unique
   products Product[]
 }
 
 model Product {
   id              String   @id @default(uuid())
-  reviews         Int
-  price           Float
-  rating          Float
-  originalPrice   Float?
   name            String
+  slug            String?   @unique
+  price           Float
+  originalPrice   Float?
+  rating          Decimal  @db.Decimal(2, 1) // e.g., 4.9
+  reviews         Int
   image           String
-  badge           String?
   secondaryImages String[] // multiple images
-  sizes           String[] // multiple sizes like ["S","M","L","XL"]
+  sizes           String[] // e.g., ["S","M","L","XL"]
+  badge           String?
 
-  // relation
-  category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
-  createdAt  DateTime @default(now())
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
 }
