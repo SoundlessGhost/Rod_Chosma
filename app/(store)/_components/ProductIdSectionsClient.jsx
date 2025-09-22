@@ -75,6 +75,7 @@ export default function ProductPage() {
           {/* Left column - Gallery */}
           <div className="w-full ">
             <div className="sticky top-4">
+              {/*TODO redesign product ID page */}
               {/* Main image */}
               <div className="relative w-full rounded-xl border border-gray-200 bg-gray-50 overflow-hidden">
                 <div className="relative aspect-square">

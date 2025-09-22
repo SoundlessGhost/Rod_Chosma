@@ -5,7 +5,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { BatteryCharging, Camera, Sparkles } from "lucide-react";
+import { BatteryCharging, Camera, HatGlasses, Sparkles } from "lucide-react";
 
 const featureHighlights = [
   {
@@ -28,7 +28,7 @@ const featureHighlights = [
   },
 ];
 
-export default function HomeComponents() {
+export default function HomeHeroSection() {
   const router = useRouter(); // ✅ initialize
 
   return (
@@ -45,50 +45,6 @@ export default function HomeComponents() {
         </div>
 
         <div className="relative flex min-h-[90vh] flex-col">
-          {/* <div className="bg-[#b8211f] px-4 py-2 text-center text-[10px] font-semibold uppercase tracking-[0.35em] sm:text-xs">
-            Meet the new AI glasses. Advanced AI. Enhanced capture. More
-            battery.
-          </div> */}
-
-          {/* <div className="border-b border-white/10 bg-black/10 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.35em]">
-              <div className="flex items-center gap-3 text-sm tracking-[0.45em]">
-                <span className="font-semibold text-white">Ray·Ban</span>
-                <span className="h-4 w-px bg-white/30" />
-                <span className="text-white/70">Meta</span>
-              </div>
-              <div className="hidden flex-1 items-center justify-center gap-6 text-[9px] text-white/80 md:flex">
-                {navLinks.map((item) => (
-                  <Link
-                    key={item}
-                    className="transition-colors duration-200 hover:text-white"
-                    href="#"
-                  >
-                    {item}
-                  </Link>
-                ))}
-              </div>
-              <div className="hidden items-center gap-4 text-[9px] text-white/70 sm:flex">
-                {utilityLinks.map((item) => (
-                  <Link
-                    key={item}
-                    className="transition-colors duration-200 hover:text-white"
-                    href="#"
-                  >
-                    {item}
-                  </Link>
-                ))}
-              </div>
-              <button
-                aria-label="Open navigation"
-                className="inline-flex items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white md:hidden"
-                type="button"
-              >
-                <Menu className="size-4" />
-              </button>
-            </div>
-          </div> */}
-
           <div className="relative mx-auto flex w-full flex-1 flex-col justify-center px-6 py-16 sm:px-10 md:px-12 lg:max-w-6xl lg:py-24">
             <motion.div
               animate={{ opacity: 1, y: 0 }}
@@ -98,6 +54,7 @@ export default function HomeComponents() {
             >
               <div className="flex items-center gap-3">
                 <span className="rounded-full border border-white/30 px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70 backdrop-blur-sm">
+                  
                   ROD | CHOSMA
                 </span>
                 <span className="hidden h-px flex-1 bg-white/20 sm:block" />
@@ -158,32 +115,6 @@ export default function HomeComponents() {
           </div>
         </div>
       </section>
-
-      {/* <div
-        className="lg:bg-cover h-[100vh] text-center absolute top-0 flex flex-col p-8 justify-center items-center"
-        style={{
-          backgroundImage: "url(/plan.jpg)",
-        }}
-      >
-        <motion.div
-          whileInView={{ y: 0, opacity: 1 }}
-          initial={{ y: 100, opacity: 0 }}
-          transition={{ duration: 2, delay: 0.5 }}
-          className="space-y-6"
-        >
-          <h1 className="lg:text-5xl mt-16 text-3xl font-bold">
-            Find Love, Build Dreams! Your Journey Begins With Alliance !
-          </h1>
-          <p className=" italic">
-            Embark on a wonderful journey at Alliance, where you can explore the
-            beauty of relationships as you navigate through a space that
-            celebrates the simplicity and warmth of genuine connections.
-          </p>
-          <Link href={"/about"}>
-            <Button className="font-bold mt-4">Learn More</Button>
-          </Link>
-        </motion.div>
-      </div> */}
     </>
   );
 }

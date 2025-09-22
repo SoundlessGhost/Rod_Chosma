@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import {
   Sheet,
   SheetTitle,
@@ -10,9 +12,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Menu, ChevronRight, Handbag, HatGlasses } from "lucide-react";
-import Link from "next/link";
 
-// --- menu data (চাইলে এখানে আইটেম বদলাও) ---
 const topLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
@@ -35,68 +35,63 @@ export default function MobileNav() {
       <SheetTrigger asChild>
         <button
           aria-label="Open navigation"
-          className="inline-flex items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white md:hidden"
+          className="inline-flex cursor-pointer items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white md:hidden"
           type="button"
         >
           <Menu className="size-4" />
         </button>
-        {/* <button
-          aria-label="Open menu"
-          className="md:hidden cursor-pointer inline-flex items-center justify-center rounded-md border
-                     border-gray-200 p-2 hover:bg-gray-50"
-        >
-          <Menu size={20} />
-        </button> */}
       </SheetTrigger>
 
-      {/* grid = header | body (scroll) | footer (fixed) */}
+      {/* header | body (scroll) | footer */}
       <SheetContent
         side="right"
-        className="w-[92vw] max-w-sm p-0 bg-white h-[100dvh] grid grid-rows-[auto,1fr,auto]"
+        className="w-[92vw] max-w-sm p-0 h-[100dvh] grid grid-rows-[auto,1fr,auto]
+                   bg-black/85 text-white backdrop-blur-md
+                   border-l border-white/10 shadow-2xl"
       >
-        {/* hidden accessible header */}
+        {/* accessible header */}
         <SheetHeader className="sr-only">
           <SheetTitle>Mobile Navigation</SheetTitle>
           <SheetDescription>Site sections</SheetDescription>
         </SheetHeader>
 
-        {/* Brand  */}
-        <div className="px-5 py-4 border-b">
+        {/* Brand */}
+        <div className="px-5 py-4 border-b border-white/10 bg-black/70">
           <Link
             href="/"
-            className="text-lg inline-flex items-center gap-2 font-bold tracking-[0.15em] 
-               text-gray-900 hover:text-teal-700 transition-colors duration-200"
+            className="text-lg inline-flex items-center gap-2 font-bold tracking-[0.15em]
+                       text-white hover:text-white/90 transition-colors"
           >
-            <span className="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center shadow-md">
+            <span className="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center shadow-md">
               <HatGlasses size={18} />
             </span>
             RODCHOSMA
           </Link>
         </div>
 
+        {/* Body */}
         <div className="overflow-y-auto">
-          {/* Dense list rows (first screenshot style) */}
-          <nav aria-label="Categories" className="divide-y">
+          {/* top links — dense rows, glass look */}
+          <nav aria-label="Categories" className="divide-y divide-white/10">
             {topLinks.map((l) => (
               <SheetClose asChild key={l.href}>
                 <Link
                   href={l.href}
-                  className={`flex items-center justify-between px-5 py-3 text-[15px]
-                              hover:bg-gray-50 active:bg-gray-100 transition
-                              ${l.highlight ? "bg-gray-100 font-medium" : ""}`}
+                  className="flex items-center justify-between px-5 py-3 text-[15px]
+                             bg-white/0 hover:bg-white/10 transition rounded-none"
                 >
-                  <span>{l.label}</span>
-                  <ChevronRight size={18} className="text-gray-400" />
+                  <span className="text-white">{l.label}</span>
+                  <ChevronRight size={18} className="text-white/40" />
                 </Link>
               </SheetClose>
             ))}
           </nav>
 
-          {/* Sections like screenshot #3 */}
+          {/* sections */}
           <div className="px-5 py-5 space-y-6">
             {/* BROWSE */}
             <section>
-              <h4 className="text-xs font-semibold tracking-widest text-gray-400 mb-2">
+              <h4 className="text-xs font-semibold tracking-widest text-white/50 mb-2">
                 BROWSE
               </h4>
               <ul className="space-y-1">
@@ -105,7 +100,7 @@ export default function MobileNav() {
                     <SheetClose asChild>
                       <Link
                         href={l.href}
-                        className="inline-flex items-center py-1 text-[15px] hover:underline"
+                        className="inline-flex items-center py-1 text-[15px] text-white/90 hover:underline"
                       >
                         {l.label}
                       </Link>
@@ -117,12 +112,12 @@ export default function MobileNav() {
 
             {/* WANT TO CHAT? */}
             <section>
-              <h4 className="text-xs font-semibold tracking-widest text-gray-400 mb-2">
+              <h4 className="text-xs font-semibold tracking-widest text-white/50 mb-2">
                 WANT TO CHAT?
               </h4>
-              <div className="text-[15px]">
+              <div className="text-[15px] text-white/90">
                 Call us{" "}
-                <span className="text-teal-700 font-medium hover:underline">
+                <span className="text-red-500 font-medium hover:underline">
                   01794951003
                 </span>
               </div>
@@ -130,7 +125,7 @@ export default function MobileNav() {
 
             {/* SOCIAL */}
             <section>
-              <h4 className="text-xs font-semibold tracking-widest text-gray-400 mb-2">
+              <h4 className="text-xs font-semibold tracking-widest text-white/50 mb-2">
                 SOCIAL
               </h4>
               <ul className="space-y-1">
@@ -140,7 +135,7 @@ export default function MobileNav() {
                       href={l.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex hover:underline items-center py-1 text-[15px]"
+                      className="inline-flex items-center py-1 text-[15px] text-white/90 hover:underline"
                     >
                       {l.label}
                     </a>
@@ -151,14 +146,14 @@ export default function MobileNav() {
           </div>
         </div>
 
-        {/* FOOTER — fixed bottom CTA */}
-        <div className="px-5 py-4 border-t bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
+        {/* Footer CTA */}
+        <div className="px-5 py-4 border-t border-white/10 bg-black/70 backdrop-blur-md">
           <SheetClose asChild>
             <Link
               href="/products"
               className="inline-flex items-center justify-center w-full rounded-md
-                         bg-teal-700 px-5 py-2.5 text-white text-[15px] font-medium
-                         hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-600/40"
+                         bg-red-600 px-5 py-2.5 text-white text-[15px] font-medium
+                         hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/30"
             >
               Go to shop <Handbag size={16} className="ml-2" strokeWidth={2} />
             </Link>

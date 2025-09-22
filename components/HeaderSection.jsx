@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Menu } from "lucide-react";
+import { HatGlasses, Menu } from "lucide-react";
 import MobileNav from "./MobileNav";
 import CartSheet from "./CartSheet";
 
@@ -28,7 +28,12 @@ const HeaderSection = () => {
             href={"/"}
             className="flex items-center gap-3 text-sm tracking-[0.45em]"
           >
-            <span className="font-semibold text-white">RODCHOSMA</span>
+            <span className="font-semibold inline-flex justify-between items-center text-white">
+              <span className="w-8 h-8 rounded-lg text-white flex items-center justify-center shadow-md">
+                <HatGlasses size={18} />
+              </span>
+              RODCHOSMA
+            </span>
           </Link>
           <div className="hidden flex-1 items-center justify-center gap-6 text-[9px] text-white/80 md:flex">
             {navLinks.map((item) => (

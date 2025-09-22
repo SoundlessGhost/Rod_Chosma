@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import {
   Sheet,
   SheetTitle,
@@ -12,7 +11,6 @@ import {
   SheetTrigger,
   SheetDescription,
 } from "@/components/ui/sheet";
-
 import { useCart } from "@/app/_context/CartContext";
 import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react";
 
@@ -24,7 +22,6 @@ const fmt = new Intl.NumberFormat("en-BD", {
 
 export default function CartSheet() {
   const { cart, increment, decrement, removeFromCart } = useCart();
-
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -33,150 +30,141 @@ export default function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        {/* <button
+        <button
           aria-label="Open cart"
-          className="relative p-2 cursor-pointer text-gray-700 hover:text-teal-700"
+          className="relative inline-flex cursor-pointer ml-2 items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white"
+          type="button"
         >
-          <ShoppingCart size={24} />
+          <ShoppingCart className="size-4" />
           {cart.length > 0 && (
-            <span className="absolute -top-1 -right-1 text-[10px] bg-teal-700 text-white rounded-full w-4 h-4 flex items-center justify-center">
+            <span className="absolute -top-1.5 -right-1.5 text-[10px] bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-md">
               {cart.length}
             </span>
           )}
-        </button> */}
-        <button
-          aria-label="Open navigation"
-          className="inline-flex ml-2 items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white"
-          type="button"
-        >
-          <ShoppingCart className="size-4 " />
         </button>
       </SheetTrigger>
 
       <SheetContent
         side="right"
-        className="w-[88vw] max-w-sm p-0 h-[100dvh] flex flex-col"
+        className="w-[88vw] max-w-sm p-0 h-[100dvh] flex flex-col bg-black/80 backdrop-blur-md text-white shadow-xl border-l border-white/10"
       >
-        {/* Header */}
-        {cart.length === 0 ? (
-          ""
-        ) : (
-          <div className="px-4 py-3 border-b">
-            <SheetHeader className="text-left space-y-1">
-              <SheetTitle>Your Cart</SheetTitle>
-              <SheetDescription>
+        {/* A11y: DialogTitle সবসময় থাকবে */}
+        <SheetHeader className="sr-only">
+          <SheetTitle>Shopping cart</SheetTitle>
+          <SheetDescription>
+            Manage items in your shopping cart.
+          </SheetDescription>
+        </SheetHeader>
+
+        {/* Visual header (optional) */}
+        {cart.length > 0 && (
+          <div className="px-4 py-3 border-b border-white/10 bg-black/80 backdrop-blur-sm">
+            <div className="text-left space-y-1">
+              <h2 className="text-lg font-semibold tracking-wide text-white">
+                Your Cart
+              </h2>
+              <p className="text-xs text-white/60">
                 Manage items in your shopping cart.
-              </SheetDescription>
-            </SheetHeader>
+              </p>
+            </div>
           </div>
         )}
-        {/* TODO Product data not why? */}
+
         {/* Body */}
         {cart.length === 0 ? (
-          // Empty view vertically centered
           <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
             <Image
               src="/empty-cart.png"
               alt="Empty cart"
               width={96}
               height={96}
-              className="mb-4 object-contain"
+              className="mb-4 object-contain opacity-80"
             />
-            <p className="text-gray-700 font-medium">
+            <p className="text-white font-medium">
               Your cart is currently empty.
             </p>
-            <p className="text-gray-400 text-sm mt-1 max-w-xs">
+            <p className="text-white/50 text-sm mt-1 max-w-xs">
               You may check out all the available products and buy some in the
               shop.
             </p>
             <SheetClose asChild>
               <Link
                 href="/products"
-                className="mt-6 inline-flex items-center justify-center rounded-md bg-teal-700 px-5 py-2 text-white hover:bg-teal-800"
+                className="mt-6 inline-flex items-center justify-center rounded-md bg-red-600 px-5 py-2 text-white hover:bg-red-700 transition"
               >
                 Return to shop
               </Link>
             </SheetClose>
           </div>
         ) : (
-          // Products list (always starts from top)
-          <div className="flex-1  overflow-y-auto px-4 py-3">
-            <ul className="space-y-3">
-              {cart.map((item, i) => (
-                <li
-                  key={i}
-                  className="flex hover:bg-gray-50 p-2 rounded-lg gap-3"
-                >
-                  {/* thumb */}
-                  <SheetClose asChild>
-                    <Link
-                      href={`/products/${item.id}`}
-                      className="relative w-14 h-14 rounded-sm overflow-hidden shrink-0"
-                    >
-                      <Image
-                        src={item.image || "/placeholder.png"}
-                        alt={item.name || "Product image"}
-                        fill
-                        className="object-cover"
-                      />
-                    </Link>
-                  </SheetClose>
-                  {/* details */}
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <h4 className="text-sm font-medium leading-snug">
-                        {item.name}
-                      </h4>
+          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+            {cart.map((item, i) => (
+              <li
+                key={i}
+                className="flex items-center gap-3 bg-white/5 hover:bg-white/10 transition rounded-lg p-3"
+              >
+                <SheetClose asChild>
+                  <Link
+                    href={`/products/${item.id}`}
+                    className="relative w-14 h-14 rounded overflow-hidden shrink-0 border border-white/10"
+                  >
+                    <Image
+                      src={item.image || "/placeholder.png"}
+                      alt={item.name || "Product image"}
+                      fill
+                      className="object-cover"
+                    />
+                  </Link>
+                </SheetClose>
 
-                      {/* TODO প্রোডাক্ট এর উপর ক্লিক করলে যেন স্পেসিফিক পেজে নিয়ে যায় */}
-                      {/* TODO Failed to load product */}
+                <div className="flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h4 className="text-sm font-medium text-white">
+                      {item.name}
+                    </h4>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-white/40 hover:text-red-500 transition"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+
+                  <div className="mt-2 flex items-center justify-between">
+                    <div className="inline-flex items-center gap-2">
                       <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-gray-400  cursor-pointer hover:text-red-500"
+                        onClick={() => decrement(item.id)}
+                        className="w-6 h-6 border border-white/20 rounded flex items-center justify-center text-white/70 hover:text-white"
                       >
-                        <Trash2 size={16} />
+                        <Minus size={12} />
+                      </button>
+                      <span className="w-6 text-center text-sm text-white">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => increment(item.id)}
+                        className="w-6 h-6 border border-white/20 rounded flex items-center justify-center text-white/70 hover:text-white"
+                      >
+                        <Plus size={12} />
                       </button>
                     </div>
 
-                    <div className="mt-1.5 flex items-center justify-between">
-                      {/* qty controls */}
-                      <div className="inline-flex items-center gap-2">
-                        <button
-                          onClick={() => decrement(item.id)}
-                          className="w-6 h-6 border rounded flex items-center justify-center"
-                        >
-                          <Minus size={12} />
-                        </button>
-                        <span className="w-6 text-center text-sm">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => increment(item.id)}
-                          className="w-6 h-6 border rounded flex items-center justify-center"
-                        >
-                          <Plus size={12} />
-                        </button>
-                      </div>
-
-                      <div className="text-xs text-muted-foreground">
-                        {item.quantity} × {fmt.format(item.price)}
-                      </div>
+                    <div className="text-xs text-white/60">
+                      {item.quantity} × {fmt.format(item.price)}
                     </div>
                   </div>
-                </li>
-              ))}
-            </ul>
+                </div>
+              </li>
+            ))}
           </div>
         )}
 
         {/* Footer */}
-        {cart.length === 0 ? (
-          ""
-        ) : (
-          <div className="px-4 py-3 border-t bg-background/80 backdrop-blur-sm">
+        {cart.length > 0 && (
+          <div className="px-4 py-3 border-t border-white/10 bg-black/80 backdrop-blur-sm">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-muted-foreground">Subtotal:</span>
-              <span className="text-base font-semibold">
+              <span className="text-xs text-white/60">Subtotal:</span>
+              <span className="text-base font-semibold text-white">
                 {fmt.format(subtotal)}
               </span>
             </div>
@@ -184,14 +172,14 @@ export default function CartSheet() {
               <SheetClose asChild>
                 <Link
                   href="/cart"
-                  className="inline-flex items-center justify-center rounded-md border px-3 py-2 text-xs font-medium hover:bg-muted"
+                  className="inline-flex items-center justify-center rounded-md border border-white/20 px-3 py-2 text-xs font-medium text-white hover:bg-white/10 transition"
                 >
                   View cart
                 </Link>
               </SheetClose>
               <Link
                 href="/checkout"
-                className="inline-flex items-center justify-center rounded-md bg-teal-700 px-3 py-2 text-xs font-medium text-white hover:bg-teal-800"
+                className="inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700 transition"
               >
                 Checkout
               </Link>

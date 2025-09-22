@@ -145,7 +145,7 @@ export default function ProductSectionsClient({ sections }) {
             </div>
 
             {/* View All */}
-            <div className="my-12 text-center">
+            {/* <div className="my-12 text-center">
               <Button
                 variant="outline"
                 size="lg"
@@ -154,11 +154,11 @@ export default function ProductSectionsClient({ sections }) {
                     `/products?section=${encodeURIComponent(section.title)}`
                   )
                 }
-                className="cursor-pointer rounded-full border border-white/30 bg-transparent px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-white transition hover:border-white hover:bg-white/10"
+                className="cursor-pointer rounded-full border border-white/30 bg-transparent px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-white hover:text-white transition hover:border-white hover:bg-white/10"
               >
                 View All {section.title}
               </Button>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
