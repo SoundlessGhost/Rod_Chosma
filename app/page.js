@@ -8,6 +8,7 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import HomeProducts from "./_components/HomeProducts";
 import HomeHeroSection from "@/app/_components/HomeHeroSection";
+import Testimonial06 from "@/components/testimonial-06/testimonial-06";
 
 const productSelect = {
   id: true,
@@ -101,8 +102,23 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
       />
+      <div className="my-12 text-center">
+        <p className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase text-white bg-red-600 border border-red-600 rounded-lg">
+          ROD | CHOSMA
+        </p>
+
+        <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">
+          Discover Your Perfect Style
+        </h2>
+        <p className="mt-2 text-sm italic text-gray-600">
+          Discover our most loved sunglasses, carefully crafted for comfort and
+          style, and trusted by thousands of satisfied customers around the
+          world.{" "}
+        </p>
+      </div>
 
       <HomeProducts sections={sections} />
+      <Testimonial06 />
     </>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
+
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
   Handbag,
   Minus,
@@ -10,34 +12,55 @@ import {
   ShieldCheck,
   RefreshCcw,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/app/_context/CartContext";
+
+// TODO when I add two card image not found
+
+// --- helpers ---
+function normalizeProduct(p) {
+  if (!p) return null;
+  const images = [
+    p.image ?? null,
+    ...(p.secondaryImages ?? []),
+    ...(p.images ?? []),
+  ].filter(Boolean);
+
+  return {
+    id: p.id,
+    title: p.name ?? p.title ?? p?.category?.name ?? "Untitled Product",
+    brand: p.brand ?? "RODCHOSMA",
+    price: p.price ?? 0,
+    compareAt: p.compareAt ?? null,
+    images: images.length ? images : ["/placeholder.png"],
+    rating: p.rating ?? null,
+    reviews: p.reviews ?? null,
+    badge: p.badge ?? null,
+    sizes: p.sizes ?? ["XS", "S", "M", "L", "XL"],
+    colors: p.colors ?? ["Black", "Beige"],
+    styles: p.styles ?? ["Default"],
+  };
+}
 
 export default function ProductPage() {
   const router = useRouter();
-  
+  const params = useParams();
   const { addToCart } = useCart();
 
-  // Product data
-  const product = {
-    title: "Men's Summer Slip-On Breathable Mesh Sneakers",
-    brand: "RODCHOSMA",
-    price: 279,
-    compareAt: 1680,
-    images: [
-      "/Eyeglass-1a.jpeg",
-      "/Eyeglass-1a.jpeg",
-      "/Eyeglass-1a.jpeg",
-      "/Eyeglass-1a.jpeg",
-    ],
-    colors: ["Black", "Beige"],
-    styles: ["Double Cup Holder", "Triple Cup Holder"],
-  };
+  const id = useMemo(() => {
+    const v = params?.id;
+    return Array.isArray(v) ? v[0] : v;
+  }, [params]);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [product, setProduct] = useState(null);
+
+  // UI state
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
-  const [color, setColor] = useState(product.colors[0]);
-  const [style, setStyle] = useState(product.styles[0]);
+  const [color, setColor] = useState(null);
+  const [size, setSize] = useState(null);
+  const [style, setStyle] = useState(null);
 
   const fmt = new Intl.NumberFormat("en-BD", {
     style: "currency",
@@ -45,14 +68,60 @@ export default function ProductPage() {
     maximumFractionDigits: 0,
   });
 
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await fetch(`/api/products/${id}`, { cache: "no-store" });
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          throw new Error(body?.error || `HTTP ${res.status}`);
+        }
+
+        const payload = await res.json();
+        if (!payload?.ok || !payload?.data) {
+          throw new Error(payload?.error || "Invalid response");
+        }
+
+        const normalized = normalizeProduct(payload.data);
+        if (!cancelled) {
+          setProduct(normalized);
+          setActiveImage(0);
+          setColor(normalized.colors[0] ?? null);
+          setSize(normalized.sizes[0] ?? null);
+          setStyle(normalized.styles[0] ?? null);
+        }
+      } catch (e) {
+        if (!cancelled) setError(e?.message || "Failed to load product");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
   const decrement = () => setQty((q) => Math.max(1, q - 1));
   const increment = () => setQty((q) => q + 1);
 
   function handleAddToCart() {
+    if (!product) return;
     addToCart({
-      ...product,
+      id: product.id,
+      title: product.title,
+      brand: product.brand,
+      price: product.price,
+      compareAt: product.compareAt,
+      images: product.images,
       quantity: qty,
-      options: { color, style },
+      options: { color, size, style },
     });
   }
 
@@ -67,16 +136,35 @@ export default function ProductPage() {
     { label: "Hassle-free returns", icon: RefreshCcw },
   ];
 
+  if (loading) {
+    return (
+      <section className="mt-12 md:mt-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <p className="text-sm text-gray-600">Loading product…</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <section className="mt-12 md:mt-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <p className="text-sm text-red-600">
+            {error || "Product not found."}
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="mt-12 md:mt-20 bg-white">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Main product grid - details on left, gallery on right */}
-        <div className="">
-          {/* Left column - Gallery */}
-          <div className="w-full ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Left: Gallery */}
+          <div className="w-full">
             <div className="sticky top-4">
-              {/*TODO redesign product ID page */}
-              {/* Main image */}
               <div className="relative w-full rounded-xl border border-gray-200 bg-gray-50 overflow-hidden">
                 <div className="relative aspect-square">
                   {product.images[activeImage] ? (
@@ -96,7 +184,6 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              {/* Thumbnail images */}
               {product.images.length > 1 && (
                 <div className="mt-6 grid grid-cols-4 gap-4">
                   {product.images.map((src, i) => (
@@ -128,19 +215,21 @@ export default function ProductPage() {
             </div>
           </div>
 
-          {/* Right column - Product details */}
-          <div className="w-full ">
-            <span className="inline-flex items-center text-xs font-semibold uppercase tracking-widest text-amber-600">
-              {product.brand}
-            </span>
+          {/* Right: Details */}
+          <div className="w-full">
+            {product.badge && (
+              <span className="inline-flex items-center text-xs font-semibold uppercase tracking-widest text-amber-600">
+                {product.badge}
+              </span>
+            )}
 
             <h1 className="mt-2 text-2xl md:text-3xl font-bold text-gray-900">
               {product.title}
             </h1>
 
-            {/* Pricing */}
+            {/* Price */}
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              {product.compareAt && (
+              {product.compareAt && product.compareAt > product.price && (
                 <span className="text-lg text-gray-500 line-through">
                   {fmt.format(product.compareAt)}
                 </span>
@@ -155,63 +244,102 @@ export default function ProductPage() {
               )}
             </div>
 
+            {/* Rating */}
+            {(product.rating || product.reviews) && (
+              <p className="mt-2 text-sm text-gray-600">
+                {product.rating ? `${product.rating} ★` : ""}{" "}
+                {product.reviews ? `(${product.reviews} reviews)` : ""}
+              </p>
+            )}
+
             <p className="mt-2 text-sm text-gray-500">
               Shipping calculated at checkout.
             </p>
 
             <div className="mt-8 space-y-6">
-              {/* Color selection */}
-              <div>
-                <p className="mb-2 text-sm font-semibold text-gray-900">
-                  Color
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {product.colors.map((c) => {
-                    const selected = c === color;
-                    return (
-                      <button
-                        key={c}
-                        onClick={() => setColor(c)}
-                        className={`inline-flex items-center gap-1 rounded-md border px-4 py-2 text-sm font-medium transition ${
-                          selected
-                            ? "border-teal-700 bg-teal-70 text-teal-700"
-                            : "border-gray-300 text-gray-700 hover:border-gray-400"
-                        }`}
-                      >
-                        {selected && <Check size={14} />}
-                        {c}
-                      </button>
-                    );
-                  })}
+              {/* Color */}
+              {product.colors.length > 0 && (
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-gray-900">
+                    Color
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.colors.map((c) => {
+                      const selected = c === color;
+                      return (
+                        <button
+                          key={c}
+                          onClick={() => setColor(c)}
+                          className={`inline-flex items-center gap-1 rounded-md border px-4 py-2 text-sm font-medium transition ${
+                            selected
+                              ? "border-teal-700 bg-teal-100 text-teal-700"
+                              : "border-gray-300 text-gray-700 hover:border-gray-400"
+                          }`}
+                        >
+                          {selected && <Check size={14} />}
+                          {c}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Style selection */}
-              <div>
-                <p className="mb-2 text-sm font-semibold text-gray-900">
-                  Style
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {product.styles.map((s) => {
-                    const selected = s === style;
-                    return (
-                      <button
-                        key={s}
-                        onClick={() => setStyle(s)}
-                        className={`rounded-md border px-4 py-2 text-sm font-medium transition ${
-                          selected
-                            ? "border-teal-700 bg-teal-70 text-teal-700"
-                            : "border-gray-300 text-gray-700 hover:border-gray-400"
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    );
-                  })}
+              {/* Size */}
+              {product.sizes.length > 0 && (
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-gray-900">
+                    Size
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.sizes.map((s) => {
+                      const selected = s === size;
+                      return (
+                        <button
+                          key={s}
+                          onClick={() => setSize(s)}
+                          className={`rounded-md border px-4 py-2 text-sm font-medium transition ${
+                            selected
+                              ? "border-teal-700 bg-teal-100 text-teal-700"
+                              : "border-gray-300 text-gray-700 hover:border-gray-400"
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Quantity selection */}
+              {/* Style */}
+              {product.styles.length > 0 && (
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-gray-900">
+                    Style
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.styles.map((s) => {
+                      const selected = s === style;
+                      return (
+                        <button
+                          key={s}
+                          onClick={() => setStyle(s)}
+                          className={`rounded-md border px-4 py-2 text-sm font-medium transition ${
+                            selected
+                              ? "border-teal-700 bg-teal-100 text-teal-700"
+                              : "border-gray-300 text-gray-700 hover:border-gray-400"
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Quantity */}
               <div>
                 <p className="mb-2 text-sm font-semibold text-gray-900">
                   Quantity
