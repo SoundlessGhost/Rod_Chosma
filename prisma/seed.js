@@ -11,8 +11,8 @@ const productCategories = [
         name: "Classic Aviator",
         price: 299,
         originalPrice: 399,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/2.jpeg",
+        secondaryImages: ["/2.jpeg", "/2.jpeg"],
         rating: 4.9,
         reviews: 124,
         badge: "Bestseller",
@@ -21,8 +21,8 @@ const productCategories = [
       {
         name: "Urban Explorer",
         price: 249,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/3.jpeg",
+        secondaryImages: ["/3.jpeg", "/3.jpeg"],
         rating: 4.8,
         reviews: 89,
         badge: "Popular",
@@ -31,8 +31,8 @@ const productCategories = [
       {
         name: "Beach Vibes",
         price: 199,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/4.jpeg",
+        secondaryImages: ["/4.jpeg", "/4.jpeg"],
         rating: 4.7,
         reviews: 156,
         badge: "Summer Hit",
@@ -41,8 +41,8 @@ const productCategories = [
       {
         name: "Executive Elite",
         price: 449,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/5.jpeg",
+        secondaryImages: ["/5.jpeg", "/5.jpeg"],
         rating: 5.0,
         reviews: 67,
         badge: "Premium",
@@ -66,8 +66,8 @@ const productCategories = [
       {
         name: "Minimalist Pro",
         price: 279,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/eyeglass-1.jpeg",
+        secondaryImages: ["/eyeglass-1.jpeg", "/eyeglass-1.jpeg"],
         rating: 4.8,
         reviews: 15,
         badge: "New",
@@ -76,8 +76,8 @@ const productCategories = [
       {
         name: "Retro Revival",
         price: 219,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/eyeglass-1.jpeg",
+        secondaryImages: ["/eyeglass-2.jpeg", "/eyeglass-2.jpeg"],
         rating: 4.6,
         reviews: 31,
         badge: "New",
@@ -86,8 +86,8 @@ const productCategories = [
       {
         name: "Sport Fusion",
         price: 359,
-        image: "/Eyeglass-1a.jpeg",
-        secondaryImages: ["/Eyeglass-1a.jpeg", "/Eyeglass-1a.jpeg"],
+        image: "/1.jpeg",
+        secondaryImages: ["/1.jpeg", "/1.jpeg"],
         rating: 4.9,
         reviews: 19,
         badge: "New",
@@ -97,16 +97,6 @@ const productCategories = [
   },
 ];
 
-// async function main() {
-//   for (const category of productCategories) {
-//     await prisma.category.create({
-//       data: {
-//         title: category.title,
-//         products: { create: category.products },
-//       },
-//     });
-//   }
-// }
 async function main() {
   for (const category of productCategories) {
     await prisma.category.upsert({

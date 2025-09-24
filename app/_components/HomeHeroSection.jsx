@@ -54,7 +54,6 @@ export default function HomeHeroSection() {
             >
               <div className="flex items-center gap-3">
                 <span className="rounded-full border border-white/30 px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70 backdrop-blur-sm">
-                  
                   ROD | CHOSMA
                 </span>
                 <span className="hidden h-px flex-1 bg-white/20 sm:block" />

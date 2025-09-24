@@ -96,16 +96,14 @@ export default async function HomePage() {
 
   return (
     <>
-      <HomeHeroSection />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
       />
       <div className="my-12 text-center">
-        <p className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase text-white bg-red-600 border border-red-600 rounded-lg">
+        {/* <p className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase text-white bg-red-600 border border-red-600 rounded-lg">
           ROD | CHOSMA
-        </p>
+        </p> */}
 
         <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">
           Discover Your Perfect Style

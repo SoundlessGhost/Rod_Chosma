@@ -17,8 +17,7 @@ const topLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
-  { href: "/support", label: "Support" },
-  { href: "/blog", label: "Blog" },
+  { href: "/store-locator", label: "Store Locator" },
 ];
 
 const browseLinks = [{ href: "/help", label: "Customer Help" }];
@@ -35,7 +34,7 @@ export default function MobileNav() {
       <SheetTrigger asChild>
         <button
           aria-label="Open navigation"
-          className="inline-flex cursor-pointer items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white md:hidden"
+          className="inline-flex cursor-pointer  items-center justify-center rounded-full border border-white/30 p-2 text-white/80 transition hover:border-white/60 hover:text-white"
           type="button"
         >
           <Menu className="size-4" />
