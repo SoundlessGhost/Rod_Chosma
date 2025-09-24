@@ -161,19 +161,20 @@ export default function ProductPage() {
   return (
     <section className="mt-12 md:mt-20 bg-white">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="block lg:flex items-center justify-evenly ">
           {/* Left: Gallery */}
           <div className="w-full">
-            <div className="sticky top-4">
-              <div className="relative w-full rounded-xl border border-gray-200 bg-gray-50 overflow-hidden">
-                <div className="relative aspect-square">
+            <div className=" top-4">
+              <div className=" w-full ">
+                <div className=" md:h-[70vh] w-full h-full md:w-[40vw]">
                   {product.images[activeImage] ? (
                     <Image
                       src={product.images[activeImage]}
                       alt={product.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover"
+                      height={600}
+                      width={600}
+                      // sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover rounded-md h-full w-full"
                       priority
                     />
                   ) : (
@@ -216,7 +217,7 @@ export default function ProductPage() {
           </div>
 
           {/* Right: Details */}
-          <div className="w-full">
+          <div className="w-[90%] mx-auto">
             {product.badge && (
               <span className="inline-flex items-center text-xs font-semibold uppercase tracking-widest text-amber-600">
                 {product.badge}

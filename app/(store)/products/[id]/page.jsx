@@ -34,7 +34,7 @@ export default async function ProductIdPage({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <div className="grid md:grid-cols-2 gap-10">
+      <div className="">
         <ProductIdSectionsClient product={product} />
       </div>
     </div>
