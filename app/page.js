@@ -24,8 +24,6 @@ function serialize(p) {
   return {
     ...p,
     price: p.price != null ? Number(p.price) : null,
-    mrp: p.originalPrice != null ? Number(p.originalPrice) : null,
-    rating: p.rating != null ? Number(p.rating) : null,
     createdAt: p.createdAt?.toISOString?.() ?? p.createdAt,
   };
 }

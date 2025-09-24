@@ -92,7 +92,7 @@ export default function ProductSectionsClient({ sections }) {
                       <h3 className="mb-2 line-clamp-1 text-lg font-semibold text-white">
                         {p.name}
                       </h3>
-                      
+
                       {/* Price + CTA */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-baseline space-x-2">
@@ -102,11 +102,6 @@ export default function ProductSectionsClient({ sections }) {
                           >
                             {fmt.format(p.price)}
                           </span>
-                          {p.originalPrice && (
-                            <span className="text-sm text-white/40 line-through">
-                              {fmt.format(p.originalPrice)}
-                            </span>
-                          )}
                         </div>
 
                         <Button

@@ -9,7 +9,6 @@ export const revalidate = 300;
 function serializeProduct(p) {
   return {
     ...p,
-    rating: p.rating != null ? Number(p.rating) : null, // Decimal -> number
     createdAt: p.createdAt?.toISOString?.() ?? p.createdAt,
   };
 }
@@ -33,7 +32,6 @@ export default async function ProductsPage() {
     orderBy: { title: "asc" },
     include: {
       products: {
-        take: 8,
         orderBy: { createdAt: "desc" },
       },
     },
