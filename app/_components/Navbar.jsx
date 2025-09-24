@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { HatGlasses } from "lucide-react";
+import Image from "next/image";
 import MobileNav from "./MobileNav";
 import CartSheet from "../../components/CartSheet";
 
-// const navLinks = ["PRODUCTS", "ABOUT"];
-const utilityLinks = ["PRODUCTS", "ABOUT", "Store Locator", "Customer Care"];
+const utilityLinks = ["PRODUCT", "ABOUT", "Catalog", "Customer Care"];
 
-const HeaderSection = () => {
+const Navbar = () => {
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 text-white">
@@ -20,26 +19,19 @@ const HeaderSection = () => {
               href={"/"}
               className="flex items-center gap-3 text-sm tracking-[0.45em]"
             >
-              <span className="font-semibold inline-flex items-center text-white">
-                <span className="w-8 h-8 rounded-lg text-white flex items-center justify-center shadow-md">
-                  <HatGlasses size={18} />
+              <span className="font-facebook font-bold text-amber-400 inline-flex items-center">
+                <span className="w-8 h-8 mr-2 flex items-center justify-center shadow-md">
+                  <Image
+                    src="/Brand/logo.png" // from public folder
+                    alt="RodChosma Logo"
+                    width={32}
+                    height={32}
+                    priority
+                  />
                 </span>
                 RODCHOSMA
               </span>
             </Link>
-
-            {/* Desktop nav */}
-            {/* <div className="hidden flex-1 items-center justify-center gap-6 text-[9px] text-white/80 md:flex">
-              {navLinks.map((item) => (
-                <Link
-                  key={item}
-                  className="transition-colors duration-200 hover:text-white"
-                  href="#"
-                >
-                  {item}
-                </Link>
-              ))}
-            </div> */}
 
             {/* Right utilities */}
             <div className="flex items-center justify-between gap-3">
@@ -72,4 +64,4 @@ const HeaderSection = () => {
   );
 };
 
-export default HeaderSection;
+export default Navbar;

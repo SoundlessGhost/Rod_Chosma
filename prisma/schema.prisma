@@ -16,14 +16,12 @@ model Category {
 model Product {
   id              String   @id @default(uuid())
   name            String
-  slug            String?   @unique
   price           Float
-  originalPrice   Float?
-  rating          Decimal  @db.Decimal(2, 1) // e.g., 4.9
-  reviews         Int
+  shape           String
+  lens            String
   image           String
-  secondaryImages String[] // multiple images
-  sizes           String[] // e.g., ["S","M","L","XL"]
+  secondaryImages String[]
+  sizes           String[]
   badge           String?
 
   categoryId Int

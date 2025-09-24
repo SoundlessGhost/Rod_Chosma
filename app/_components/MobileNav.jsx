@@ -17,7 +17,7 @@ const topLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
-  { href: "/store-locator", label: "Store Locator" },
+  { href: "/store-locator", label: "Catalog" },
 ];
 
 const browseLinks = [{ href: "/help", label: "Customer Help" }];

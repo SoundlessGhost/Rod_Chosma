@@ -1,100 +1,82 @@
-// app/not-found.js
 import Link from "next/link";
 import Image from "next/image";
 
-const ACCENT = "#e95d4f";
-
 export default function NotFound() {
   return (
-    <section className="relative isolate min-h-screen overflow-hidden bg-[#0f1210] text-white">
-      {/* Background image + overlays (same feel as hero) */}
-      <div aria-hidden="true" className="absolute inset-0">
-        <Image
-          alt="Wood desk with glasses"
-          src="https://images.unsplash.com/photo-1582478134397-2b32c067e22d?w=1600&auto=format&fit=crop&q=60"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050706] via-[#050706]/90 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
-      </div>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950">
+      <div className="mx-auto max-w-3xl px-6 py-16 flex items-center justify-center">
+        <div className="relative w-full overflow-hidden rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/50 backdrop-blur shadow-xl">
+          {/* soft glow */}
+          <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-amber-300/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-amber-400/20 blur-3xl" />
 
-      <div className="relative mx-auto flex min-h-screen w-full flex-col justify-center px-6 py-16 sm:px-10 md:px-12 lg:max-w-6xl lg:py-24">
-        {/* Top chip */}
-        <div className="flex items-center gap-3">
-          <span className="rounded-full border border-white/30 px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-white/70 backdrop-blur-sm">
-            ROD | CHOSMA
-          </span>
-          <span className="hidden h-px flex-1 bg-white/20 sm:block" />
-        </div>
+          <div className="relative p-8 md:p-12">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full shadow-md bg-white dark:bg-slate-800">
+                <Image
+                  src="/Brangd/logo.png"
+                  alt="RodChosma Logo"
+                  width={24}
+                  height={24}
+                  priority
+                />
+              </span>
+              <span className="font-semibold text-amber-500 tracking-wide">
+                RODCHOSMA
+              </span>
+            </div>
 
-        <div className="mt-6 space-y-6">
-          {/* 404 label */}
-          <p
-            className="inline-block rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-white"
-            style={{ backgroundColor: ACCENT }}
-          >
-            404 — Not Found
-          </p>
+            <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
+              404 — Page not found
+            </h1>
 
-          {/* Heading */}
-          <h1 className="text-3xl font-semibold uppercase tracking-[0.2em] sm:text-4xl lg:text-5xl">
-            The page you’re looking for
-            <br className="hidden sm:block" /> isn’t in our field of view.
-          </h1>
+            <p className="mt-3 text-slate-600 dark:text-slate-300">
+              Oops! The page you are looking for does not exist or has been
+              moved.
+            </p>
 
-          {/* Subtext */}
-          <p className="text-sm leading-relaxed text-white/80 sm:text-base max-w-xl">
-            It may have moved or no longer exists. Explore our products or head
-            back home to keep discovering the world through goggles.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link
-              href="/products"
-              className="h-12 inline-flex items-center justify-center rounded-full bg-white px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-black transition hover:bg-white/90"
-            >
-              Browse Products
-            </Link>
-            <Link
-              href="/"
-              className="h-12 inline-flex items-center justify-center rounded-full border border-white/60 bg-transparent px-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-white transition hover:border-white hover:bg-white/10"
-            >
-              Return Home
-            </Link>
-          </div>
-
-          {/* Feature hints (mini-cards like hero) */}
-          <div className="mt-12 grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                title: "Hands-free capture",
-                desc: "Snap photos and record immersive video with voice-activated precision.",
-              },
-              {
-                title: "AI-enhanced vision",
-                desc: "Translate, identify, and share in real time with a glance toward the world.",
-              },
-              {
-                title: "Power that lasts",
-                desc: "Push further with all-day battery engineered for your best stories.",
-              },
-            ].map((f) => (
-              <div
-                key={f.title}
-                className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur"
+            {/* actions */}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-medium bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 transition"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.3em]">
-                  {f.title}
-                </p>
-                <p className="mt-2 text-sm text-white/70">{f.desc}</p>
-              </div>
-            ))}
+                ← Go Home
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-medium border border-slate-300 dark:border-slate-700 hover:bg-white/60 dark:hover:bg-slate-800/60 transition"
+              >
+                Contact Support
+              </Link>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700"
+              >
+                Try the homepage →
+              </Link>
+            </div>
+
+            {/* quick suggestions */}
+            <div className="mt-8 text-sm text-slate-500 dark:text-slate-400">
+              Quick links:{" "}
+              <Link
+                href="/products"
+                className="underline underline-offset-4 hover:text-slate-700 dark:hover:text-slate-200"
+              >
+                Products
+              </Link>
+              {" · "}
+              <Link
+                href="/about"
+                className="underline underline-offset-4 hover:text-slate-700 dark:hover:text-slate-200"
+              >
+                About
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

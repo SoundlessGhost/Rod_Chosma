@@ -28,8 +28,8 @@ const featureHighlights = [
   },
 ];
 
-export default function HomeHeroSection() {
-  const router = useRouter(); // ✅ initialize
+export default function HeroSection() {
+  const router = useRouter(); 
 
   return (
     <>

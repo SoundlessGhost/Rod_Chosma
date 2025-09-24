@@ -7,8 +7,9 @@ import { unstable_cache } from "next/cache";
 
 import prisma from "@/lib/prisma";
 import HomeProducts from "./_components/HomeProducts";
-import HomeHeroSection from "@/app/_components/HomeHeroSection";
+import HomeHeroSection from "@/unused/HeroSection";
 import Testimonial06 from "@/components/testimonial-06/testimonial-06";
+import Image from "next/image";
 
 const productSelect = {
   id: true,
@@ -101,9 +102,17 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
       />
       <div className="my-12 text-center">
-        {/* <p className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase text-white bg-red-600 border border-red-600 rounded-lg">
-          ROD | CHOSMA
-        </p> */}
+        {/* Logo instead of text badge */}
+        <div className="inline-flex items-center justify-center mb-4">
+          <Image
+            src="/Brand/logo-1.png"
+            alt="RODCHOSMA Logo"
+            width={80}
+            height={80}
+            priority
+            className="mx-auto h-12 w-auto"
+          />
+        </div>
 
         <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">
           Discover Your Perfect Style
@@ -111,7 +120,7 @@ export default async function HomePage() {
         <p className="mt-2 text-sm italic text-gray-600">
           Discover our most loved sunglasses, carefully crafted for comfort and
           style, and trusted by thousands of satisfied customers around the
-          world.{" "}
+          world.
         </p>
       </div>
 

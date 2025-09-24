@@ -92,28 +92,7 @@ export default function ProductSectionsClient({ sections }) {
                       <h3 className="mb-2 line-clamp-1 text-lg font-semibold text-white">
                         {p.name}
                       </h3>
-
-                      {/* Rating */}
-                      <div className="mb-3 flex items-center">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => {
-                            const filled = i < Math.floor(p.rating || 0);
-                            return (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${
-                                  filled ? "text-yellow-400" : "text-white/25"
-                                }`}
-                                {...(filled ? { fill: "currentColor" } : {})}
-                              />
-                            );
-                          })}
-                        </div>
-                        <span className="ml-2 text-xs text-white/60">
-                          {p.rating} ({p.reviews})
-                        </span>
-                      </div>
-
+                      
                       {/* Price + CTA */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-baseline space-x-2">

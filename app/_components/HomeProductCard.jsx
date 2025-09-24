@@ -49,7 +49,7 @@ export default function HomeProductCard({ product, position }) {
       </div>
 
       <div className="p-4">
-        {/* নাম */}
+        {/* name */}
         <Link
           href={href}
           className="line-clamp-1 text-[15px] font-medium text-slate-900 dark:text-white"
@@ -58,24 +58,7 @@ export default function HomeProductCard({ product, position }) {
           {p.name}
         </Link>
 
-        {/* রেটিং */}
-        <div
-          className="mt-1 flex items-center gap-1.5 text-[13px] text-slate-600 dark:text-white/70"
-          itemProp="aggregateRating"
-          itemScope
-          itemType="https://schema.org/AggregateRating"
-        >
-          <Star size={14} className="text-yellow-500 fill-yellow-500" />
-          <span itemProp="ratingValue">{(p.rating ?? 4.8).toFixed(1)}</span>
-          <span
-            className="text-slate-400 dark:text-white/40"
-            itemProp="reviewCount"
-          >
-            (124)
-          </span>
-        </div>
-
-        {/* দাম */}
+        {/* price */}
         <div
           className="mt-2 flex items-baseline gap-2"
           itemProp="offers"
@@ -87,15 +70,10 @@ export default function HomeProductCard({ product, position }) {
           </span>
           <meta itemProp="priceCurrency" content="BDT" />
           <meta itemProp="price" content={String(p.price)} />
-          {onSale && (
-            <span className="text-sm text-slate-400 line-through dark:text-white/40">
-              {fmt.format(p.mrp)}
-            </span>
-          )}
           <link itemProp="availability" href="https://schema.org/InStock" />
         </div>
 
-        {/* বাটন */}
+        {/* CTA */}
         <button
           onClick={() =>
             addToCart({

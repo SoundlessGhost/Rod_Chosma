@@ -48,40 +48,6 @@ const testimonials = [
     avatar:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
   },
-  {
-    id: 4,
-    name: "Emily Davis",
-    designation: "Marketing Specialist",
-    company: "BrandBoost",
-    testimonial:
-      "I've seen a significant improvement in our team's productivity since we started using this service. " +
-      "The ability to track performance, analyze data, and collaborate across teams has been a game-changer.",
-    avatar:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
-  },
-  {
-    id: 5,
-    name: "Daniel Martinez",
-    designation: "Full-Stack Developer",
-    company: "CodeCrafters",
-    testimonial:
-      "The best investment we've made! The support team is also super responsive and helpful. " +
-      "As a developer, I appreciate the well-documented API, the flexibility of integrations, and the robust security features.",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
-  },
-  {
-    id: 6,
-    name: "Sophia Lee",
-    designation: "Data Analyst",
-    company: "InsightTech",
-    testimonial:
-      "This tool has saved me hours of work! The analytics and reporting features are incredibly powerful. " +
-      "I can now generate detailed reports in minutes, which previously took days to compile. " +
-      "helping us make smarter, data-backed decisions.",
-    avatar:
-      "https://images.unsplash.com/photo-1654110455429-cf322b40a906?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyc3xlbnwwfHwwfHx8MA%3D%3D",
-  },
 ];
 const Testimonial06 = () => {
   const [api, setApi] = useState();

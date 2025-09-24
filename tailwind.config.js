@@ -4,6 +4,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        facebook: [
+          "FacebookSans",
+          "Helvetica Neue",
+          "Segoe UI",
+          "Roboto",
+          "Arial",
+          "sans-serif",
+        ],
         sans: [
           "Trebuchet MS",
           "Lucida Sans Unicode",

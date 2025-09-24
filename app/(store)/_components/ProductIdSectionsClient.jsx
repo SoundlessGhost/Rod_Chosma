@@ -244,14 +244,6 @@ export default function ProductPage() {
               )}
             </div>
 
-            {/* Rating */}
-            {(product.rating || product.reviews) && (
-              <p className="mt-2 text-sm text-gray-600">
-                {product.rating ? `${product.rating} ★` : ""}{" "}
-                {product.reviews ? `(${product.reviews} reviews)` : ""}
-              </p>
-            )}
-
             <p className="mt-2 text-sm text-gray-500">
               Shipping calculated at checkout.
             </p>
