@@ -52,7 +52,7 @@ export default async function ProductsPage() {
       s.products.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `/products/${p.slug ?? p.id}`,
+        url: `/products/${p.id}`,
         name: p.name,
       }))
     ),

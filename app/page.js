@@ -5,22 +5,19 @@ export const dynamic = "force-static";
 
 import { unstable_cache } from "next/cache";
 
+import Image from "next/image";
 import prisma from "@/lib/prisma";
 import HomeProducts from "./_components/HomeProducts";
-import HomeHeroSection from "@/unused/HeroSection";
 import Testimonial06 from "@/components/testimonial-06/testimonial-06";
-import Image from "next/image";
 
 const productSelect = {
   id: true,
-  slug: true,
   name: true,
   image: true,
   price: true,
-  rating: true,
-  reviews: true,
+  shape: true,
+  lens: true,
   createdAt: true,
-  originalPrice: true,
 };
 
 function serialize(p) {
@@ -36,33 +33,27 @@ function serialize(p) {
 // Cached loader (ISR TTL = 300s)
 const getHomeSections = unstable_cache(
   async () => {
-    // বেশি কিছু আনছি যাতে ফিল্টারের পরে ৮টা নিশ্চিত থাকে
+    // Get All Product
     const [bestSellers, newArrivalsRaw] = await Promise.all([
       prisma.product.findMany({
-        take: 8,
         select: productSelect,
-        orderBy: [
-          { reviews: "desc" },
-          { rating: "desc" },
-          { createdAt: "desc" },
-        ],
+        orderBy: [{ createdAt: "desc" }],
       }),
       prisma.product.findMany({
-        take: 20, // পরে ডুপ্লিকেট বাদ দেব, তাই একটু বেশি নিলাম
         select: productSelect,
         orderBy: { createdAt: "desc" },
       }),
     ]);
 
-    // New Arrivals থেকে Best-এর আইটেমগুলো বাদ
+    // New Arrivals থেকে Best-এর আইটেম বাদ
     const bestIds = new Set(bestSellers.map((p) => p.id));
     const newArrivalsFiltered = newArrivalsRaw.filter(
       (p) => !bestIds.has(p.id)
     );
 
-    // শুধু ৮টা করে পাঠাই
-    const best = bestSellers.slice(0, 8).map(serialize);
-    const news = newArrivalsFiltered.slice(0, 8).map(serialize);
+    // ৮টা করে slice বাদ ❌
+    const best = bestSellers.map(serialize);
+    const news = newArrivalsFiltered.map(serialize);
 
     return [
       { id: "best", title: "Best Sellers", products: best },
@@ -89,7 +80,7 @@ export default async function HomePage() {
       s.products.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `/products/${p.slug || p.id}`,
+        url: `/products/${p.id}`,
         name: p.name,
       }))
     ),
