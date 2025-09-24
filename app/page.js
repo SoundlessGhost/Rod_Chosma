@@ -5,19 +5,23 @@ export const dynamic = "force-static";
 
 import { unstable_cache } from "next/cache";
 
-import Image from "next/image";
 import prisma from "@/lib/prisma";
 import HomeProducts from "./_components/HomeProducts";
+
 import Testimonial06 from "@/components/testimonial-06/testimonial-06";
+import Image from "next/image";
 
 const productSelect = {
   id: true,
   name: true,
+  sizes: true,
+  badge: true,
   image: true,
   price: true,
-  shape: true,
   lens: true,
+  shape: true,
   createdAt: true,
+  secondaryImages: true,
 };
 
 function serialize(p) {
@@ -31,7 +35,7 @@ function serialize(p) {
 // Cached loader (ISR TTL = 300s)
 const getHomeSections = unstable_cache(
   async () => {
-    // Get All Product
+    // বেশি কিছু আনছি যাতে ফিল্টারের পরে ৮টা নিশ্চিত থাকে
     const [bestSellers, newArrivalsRaw] = await Promise.all([
       prisma.product.findMany({
         select: productSelect,
@@ -43,13 +47,13 @@ const getHomeSections = unstable_cache(
       }),
     ]);
 
-    // New Arrivals থেকে Best-এর আইটেম বাদ
+    // New Arrivals থেকে Best-এর আইটেমগুলো বাদ
     const bestIds = new Set(bestSellers.map((p) => p.id));
     const newArrivalsFiltered = newArrivalsRaw.filter(
       (p) => !bestIds.has(p.id)
     );
 
-    // ৮টা করে slice বাদ ❌
+    // শুধু ৮টা করে পাঠাই
     const best = bestSellers.map(serialize);
     const news = newArrivalsFiltered.map(serialize);
 
@@ -78,7 +82,7 @@ export default async function HomePage() {
       s.products.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `/products/${p.id}`,
+        url: `/products/${p.slug || p.id}`,
         name: p.name,
       }))
     ),

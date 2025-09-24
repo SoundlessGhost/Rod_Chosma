@@ -1,6 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
 
-const slugify = require("slugify");
 const prisma = new PrismaClient();
 
 const productCategories = [

@@ -8,20 +8,23 @@ CREATE TABLE "public"."Category" (
 
 -- CreateTable
 CREATE TABLE "public"."Product" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
-    "originalPrice" DOUBLE PRECISION,
+    "shape" TEXT NOT NULL,
+    "lens" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "secondaryImages" TEXT[],
-    "rating" DOUBLE PRECISION NOT NULL,
-    "reviews" INTEGER NOT NULL,
-    "badge" TEXT,
     "sizes" TEXT[],
+    "badge" TEXT,
     "categoryId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_title_key" ON "public"."Category"("title");
 
 -- AddForeignKey
 ALTER TABLE "public"."Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "public"."Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
