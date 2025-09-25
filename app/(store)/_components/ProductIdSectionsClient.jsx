@@ -108,6 +108,8 @@ export default function ProductPage() {
     };
   }, [id]);
 
+  // TODO eikhan theke add to cart korle data missing
+
   const decrement = () => setQty((q) => Math.max(1, q - 1));
   const increment = () => setQty((q) => q + 1);
 
