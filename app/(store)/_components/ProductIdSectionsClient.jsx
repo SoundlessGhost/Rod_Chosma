@@ -1,22 +1,22 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import {
-  Handbag,
-  Minus,
   Plus,
   Check,
   Truck,
-  ShieldCheck,
+  Minus,
+  Handbag,
   RefreshCcw,
+  ShieldCheck,
 } from "lucide-react";
+
+import Image from "next/image";
+
 import { useCart } from "@/app/_context/CartContext";
+import { useEffect, useMemo, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
-// TODO when I add two card image not found
-
-// --- helpers ---
+// --- Helpers ---
 function normalizeProduct(p) {
   if (!p) return null;
   const images = [
@@ -44,6 +44,7 @@ function normalizeProduct(p) {
 export default function ProductPage() {
   const router = useRouter();
   const params = useParams();
+
   const { addToCart } = useCart();
 
   const id = useMemo(() => {
@@ -51,8 +52,8 @@ export default function ProductPage() {
     return Array.isArray(v) ? v[0] : v;
   }, [params]);
 
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
 
   // UI state
@@ -108,23 +109,39 @@ export default function ProductPage() {
     };
   }, [id]);
 
-  // TODO eikhan theke add to cart korle data missing
-
-  const decrement = () => setQty((q) => Math.max(1, q - 1));
   const increment = () => setQty((q) => q + 1);
+  const decrement = () => setQty((q) => Math.max(1, q - 1));
 
   function handleAddToCart() {
     if (!product) return;
+
     addToCart({
-      id: product.id,
-      title: product.title,
-      brand: product.brand,
-      price: product.price,
-      compareAt: product.compareAt,
-      images: product.images,
+      id: String(product.id),
+      name: product.title,
+      price: Number(product.price) || 0,
+      image: product.images?.[0] ?? "/placeholder.png",
       quantity: qty,
-      options: { color, size, style },
+      meta: {
+        // ✅ extras stored safely
+        brand: product.brand,
+        compareAt: product.compareAt,
+        images: product.images,
+        options: { color, size, style },
+      },
     });
+    // console.log("Cart item:", {
+    //   id: String(product.id),
+    //   name: product.title,
+    //   price: Number(product.price) || 0,
+    //   image: product.images?.[0] ?? "/placeholder.png",
+    //   quantity: qty,
+    //   meta: {
+    //     brand: product.brand,
+    //     compareAt: product.compareAt,
+    //     images: product.images,
+    //     options: { color, size, style },
+    //   },
+    // });
   }
 
   function handleBuyNow() {
@@ -219,7 +236,7 @@ export default function ProductPage() {
           </div>
 
           {/* Right: Details */}
-          <div className="w-[90%] mx-auto">
+          <div className="w-[90%] mt-10 mx-auto">
             {product.badge && (
               <span className="inline-flex items-center text-xs font-semibold uppercase tracking-widest text-amber-600">
                 {product.badge}
@@ -335,7 +352,7 @@ export default function ProductPage() {
               )}
 
               {/* Quantity */}
-              <div>
+              {/* <div>
                 <p className="mb-2 text-sm font-semibold text-gray-900">
                   Quantity
                 </p>
@@ -358,7 +375,7 @@ export default function ProductPage() {
                     <Plus size={14} />
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* CTAs */}

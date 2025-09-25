@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/_context/CartContext";
 
@@ -11,24 +12,9 @@ const fmt = new Intl.NumberFormat("en-BD", {
   maximumFractionDigits: 0,
 });
 
-// type P = {
-//   id: string | number;
-//   name: string;
-//   price: number;
-//   mrp?: number;
-//   image?: string;
-//   secondaryImages?: string[];
-//   badge?: string;           // e.g. "Bestseller", "New"
-//   shape?: string;           // e.g. "Square"
-//   lens?: string;            // e.g. "Polycarbonate Black"
-//   sizes?: string[];         // e.g. ["S","M","L"]
-// };
-
-export default function HomeProductCard({
-  product,
-  position,
-}) {
+export default function HomeProductCard({ product, position }) {
   const { addToCart } = useCart();
+
   const p = product;
   const onSale = p.mrp && p.mrp > p.price;
   const href = `/products/${p.id}`;

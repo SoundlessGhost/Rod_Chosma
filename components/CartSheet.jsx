@@ -27,6 +27,8 @@ export default function CartSheet() {
     0
   );
 
+  console.log(cart);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -120,7 +122,7 @@ export default function CartSheet() {
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <h4 className="text-sm font-medium text-white">
-                      {item.name}
+                      {item.name || "Product  name"}
                     </h4>
                     <button
                       onClick={() => removeFromCart(item.id)}

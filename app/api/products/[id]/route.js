@@ -1,13 +1,12 @@
 import prisma from "@/lib/prisma";
-
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs"; // ✅ Prisma requires Node.js runtime
-export const dynamic = "force-dynamic"; // ✅ Always fetch fresh data (no caching)
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-export async function GET(_req, { params }) {
+export async function GET(_req, ctx) {
   try {
-    const { id } = params;
+    const { id } = await ctx.params;
 
     const product = await prisma.product.findUnique({
       where: { id },

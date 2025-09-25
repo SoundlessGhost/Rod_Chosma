@@ -19,7 +19,7 @@ const Navbar = () => {
               href={"/"}
               className="flex items-center gap-3 text-sm tracking-[0.45em]"
             >
-              <span className="font-facebook font-bold text-amber-400 inline-flex items-center">
+              <span className="font-bold tracking-[0.2em] text-xl font-facebook text-amber-400 inline-flex items-center">
                 <span className="w-8 h-8 mr-2 flex items-center justify-center shadow-md">
                   <Image
                     src="/Brand/logo.png" // from public folder
@@ -58,8 +58,8 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Spacer div: header height অনুযায়ী */}
-      <div className="h-[96px]" />
+      {/* Spacer div: header height  */}
+      <div className="h-[80px]" />
     </>
   );
 };

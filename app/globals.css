@@ -128,13 +128,13 @@ body {
     "Lucida Sans", Arial, sans-serif;
 }
 
-@font-face {
+/* @font-face {
   font-family: "FacebookSans";
   src: url("/fonts/FacebookSans-Regular.woff2") format("woff2"),
        url("/fonts/FacebookSans-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 .font-facebook {
   font-family: "FacebookSans", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
