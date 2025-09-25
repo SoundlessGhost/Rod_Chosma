@@ -363,10 +363,10 @@ const productCategories = [
       {
         name: "Dahuk",
         price: 1300,
-        image: "/white-sunglass/7.jpeg",
+        image: "/white-sunglasses/7.jpeg",
         secondaryImages: [
-          "/white-sunglass/7.jpeg",
-          "/white-sunglass/7.jpeg",
+          "/white-sunglasses/7.jpeg",
+          "/white-sunglasses/7.jpeg",
         ],
         shape: "Half Rim",
         lens: "Brown Glass",
