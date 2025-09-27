@@ -137,5 +137,87 @@ body {
 } */
 
 .font-facebook {
-  font-family: "FacebookSans", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "FacebookSans", "Helvetica Neue", "Segoe UI", Roboto, Arial,
+    sans-serif;
+}
+
+/* globals.css */
+
+@layer utilities {
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(2deg);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+  @keyframes tilt {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+  @keyframes blink {
+    0%,
+    46%,
+    48%,
+    100% {
+      transform: scaleY(1);
+    }
+    47% {
+      transform: scaleY(0.15);
+    }
+  }
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .animate-bob {
+    animation: bob 4s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
+  }
+  .animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+  }
+  .animate-tilt {
+    animation: tilt 6s ease-in-out infinite;
+  }
+  .animate-blink {
+    animation: blink 5s linear infinite;
+    transform-origin: center;
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
 }

@@ -91,7 +91,7 @@ export default function CartSheet() {
             </p>
             <SheetClose asChild>
               <Link
-                href="/products"
+                href="/"
                 className="mt-6 inline-flex items-center justify-center rounded-md bg-red-600 px-5 py-2 text-white hover:bg-red-700 transition"
               >
                 Return to shop

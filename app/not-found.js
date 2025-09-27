@@ -1,82 +1,100 @@
+// app/not-found.tsx
 import Link from "next/link";
-import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950">
-      <div className="mx-auto max-w-3xl px-6 py-16 flex items-center justify-center">
-        <div className="relative w-full overflow-hidden rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/50 backdrop-blur shadow-xl">
-          {/* soft glow */}
-          <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-amber-300/30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-amber-400/20 blur-3xl" />
-
-          <div className="relative p-8 md:p-12">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full shadow-md bg-white dark:bg-slate-800">
-                <Image
-                  src="/Brangd/logo.png"
-                  alt="RodChosma Logo"
-                  width={24}
-                  height={24}
-                  priority
-                />
-              </span>
-              <span className="font-semibold text-amber-500 tracking-wide">
-                RODCHOSMA
-              </span>
-            </div>
-
-            <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
-              404 — Page not found
+    <main className="min-h-[80vh] grid place-items-center px-6">
+      <section className="w-full max-w-3xl rounded-2xl border border-slate-200/70 dark:border-white/10 p-8 sm:p-12 bg-white dark:bg-white/5 shadow-sm">
+        <div className="grid md:grid-cols-[1.2fr_1fr] items-center gap-8">
+          {/* Text */}
+          <div>
+            <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+              404
+            </p>
+            <h1 className="mt-1 text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
+              Looks like you’re lost
             </h1>
-
-            <p className="mt-3 text-slate-600 dark:text-slate-300">
-              Oops! The page you are looking for does not exist or has been
-              moved.
+            <p className="mt-2 text-slate-600 dark:text-slate-300">
+              The page you’re looking for isn’t available. Try going back to the
+              homepage.
             </p>
 
-            {/* actions */}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex gap-3">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-medium bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 transition"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-600 text-white px-4 py-2 text-sm font-medium hover:bg-emerald-700 transition"
               >
-                ← Go Home
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-medium border border-slate-300 dark:border-slate-700 hover:bg-white/60 dark:hover:bg-slate-800/60 transition"
-              >
-                Contact Support
+                Go to Home
               </Link>
               <Link
                 href="/"
-                className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-200 dark:border-white/15 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/10 transition"
               >
-                Try the homepage →
-              </Link>
-            </div>
-
-            {/* quick suggestions */}
-            <div className="mt-8 text-sm text-slate-500 dark:text-slate-400">
-              Quick links:{" "}
-              <Link
-                href="/products"
-                className="underline underline-offset-4 hover:text-slate-700 dark:hover:text-slate-200"
-              >
-                Products
-              </Link>
-              {" · "}
-              <Link
-                href="/about"
-                className="underline underline-offset-4 hover:text-slate-700 dark:hover:text-slate-200"
-              >
-                About
+                Browse Products
               </Link>
             </div>
           </div>
+
+          {/* Illustration */}
+          <div className="relative mx-auto w-full max-w-[380px]">
+            <div className="aspect-[4/3] rounded-xl bg-gradient-to-b from-emerald-50 to-white dark:from-white/10 dark:to-white/5 border border-slate-200/70 dark:border-white/10 overflow-hidden grid place-items-center">
+              <div className="relative">
+                {/* floating stones */}
+                <span className="absolute -left-16 bottom-6 h-3 w-10 rounded-full bg-slate-200/80 dark:bg-white/20 blur-[1px] animate-float-slow" />
+                <span className="absolute -right-16 bottom-10 h-3 w-12 rounded-full bg-slate-200/80 dark:bg-white/20 blur-[1px] animate-float" />
+
+                {/* the star (mascot) */}
+                <svg
+                  className="w-40 h-40 animate-bob will-change-transform"
+                  viewBox="0 0 200 200"
+                  aria-hidden="true"
+                >
+                  {/* soft shadow */}
+                  <ellipse
+                    cx="100"
+                    cy="160"
+                    rx="48"
+                    ry="10"
+                    className="fill-slate-300/40 dark:fill-white/10 animate-pulse-slow"
+                  />
+                  {/* body */}
+                  <path
+                    d="M100 20l22 44 49 7-36 34 9 49-44-23-44 23 9-49-36-34 49-7z"
+                    className="fill-emerald-400 dark:fill-emerald-500 stroke-emerald-600/30"
+                    strokeWidth="2"
+                  />
+                  {/* face */}
+                  <circle
+                    cx="85"
+                    cy="95"
+                    r="6"
+                    className="fill-slate-900 dark:fill-white origin-center animate-blink"
+                  />
+                  <circle
+                    cx="115"
+                    cy="95"
+                    r="6"
+                    className="fill-slate-900 dark:fill-white origin-center animate-blink delay-150"
+                  />
+                  <path
+                    d="M86 115q14 10 28 0"
+                    className="fill-none stroke-slate-900 dark:stroke-white"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+
+                {/* 404 text floating */}
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 flex gap-1 text-4xl font-extrabold text-slate-900/80 dark:text-white/80 tracking-wider animate-tilt">
+                  <span>4</span>
+                  <span>0</span>
+                  <span>4</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -33,7 +33,7 @@ export default function Footer() {
           {/* Socials */}
           <div className="flex items-center justify-center gap-3">
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/rod.chosma.9"
               target="_blank"
               rel="noreferrer"
               aria-label="Visit us on Facebook"
@@ -44,7 +44,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/rod_chosma/?__pwa=1"
               target="_blank"
               rel="noreferrer"
               aria-label="Visit us on Instagram"

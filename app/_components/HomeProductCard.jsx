@@ -18,7 +18,10 @@ export default function HomeProductCard({ product, position }) {
   const p = product;
   const onSale = p.mrp && p.mrp > p.price;
   const href = `/products/${p.id}`;
-  const hoverImg = p.secondaryImages?.[1] ?? p.secondaryImages?.[0];
+  const hoverImg = p.secondaryImages?.[0]; // প্রথমটাকেই ধরুন
+  const inStock = p.inStock !== false; // truthy হলে ইনস্টক
+
+  const alt = p.alt ?? `${p.name}`; // হার্ডকোড 'sunglasses' বাদ
 
   return (
     <article
@@ -27,14 +30,19 @@ export default function HomeProductCard({ product, position }) {
                  dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]
                  hover:-translate-y-0.5 duration-300"
       itemScope
-      itemType="https://schema.org/Product"
+      itemType="https://schema.org"
     >
-      <meta itemProp="position" content={String(position)} />
+      {/* Product meta */}
+      <meta itemProp="name" content={p.name} />
+      {p.image && <link itemProp="image" href={p.image} />}
+      <link itemProp="url" href={href} />
 
       <div className="relative aspect-[4/3] overflow-hidden">
-        {/* badge */}
         {(p.badge || onSale) && (
-          <div className="absolute left-3 top-3 z-10 flex gap-2">
+          <div
+            className="absolute left-3 top-3 z-10 flex gap-2"
+            aria-hidden="true"
+          >
             {p.badge && (
               <span className="rounded-full bg-slate-900 text-white text-[11px] px-2.5 py-1 dark:bg-white/20 backdrop-blur">
                 {p.badge}
@@ -48,34 +56,32 @@ export default function HomeProductCard({ product, position }) {
           </div>
         )}
 
-        <Link href={href} className="absolute inset-0" prefetch>
-          {/* base image */}
+        <Link href={href} className="absolute inset-0">
           <Image
             src={p.image || "/placeholder.png"}
-            alt={`${p.name} sunglasses`}
+            alt={alt}
             fill
             className={`object-cover transition-transform duration-500 ease-out
                         group-hover:scale-105 will-change-transform
                         ${hoverImg ? "opacity-100 group-hover:opacity-0" : ""}`}
-            priority={position <= 4}
-            sizes="(min-width:1280px) 300px, (min-width:1024px) 25vw, 50vw"
+            priority={position <= 2} // কেবল উপরের সারিতে
+            sizes="(min-width:1280px) 25vw, (min-width:1024px) 33vw, 50vw"
           />
 
-          {/* hover image (optional) */}
           {hoverImg && (
             <Image
               src={hoverImg}
               alt={`${p.name} alternate view`}
               fill
               className="object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
-              sizes="(min-width:1280px) 300px, (min-width:1024px) 25vw, 50vw"
+              sizes="(min-width:1280px) 25vw, (min-width:1024px) 33vw, 50vw"
+              loading="lazy"
             />
           )}
         </Link>
       </div>
 
       <div className="p-4">
-        {/* name */}
         <Link
           href={href}
           className="line-clamp-1 text-[15px] font-medium text-slate-900 dark:text-white"
@@ -84,14 +90,12 @@ export default function HomeProductCard({ product, position }) {
           {p.name}
         </Link>
 
-        {/* meta: shape • lens */}
         {(p.shape || p.lens) && (
           <p className="mt-1 text-[12px] text-slate-500 dark:text-slate-400">
             {[p.shape, p.lens].filter(Boolean).join(" • ")}
           </p>
         )}
 
-        {/* sizes */}
         {p.sizes?.length ? (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {p.sizes.slice(0, 4).map((s) => (
@@ -111,7 +115,7 @@ export default function HomeProductCard({ product, position }) {
           </div>
         ) : null}
 
-        {/* price row */}
+        {/* Offer schema */}
         <div
           className="mt-2 flex items-baseline gap-2"
           itemProp="offers"
@@ -127,12 +131,26 @@ export default function HomeProductCard({ product, position }) {
             </span>
           )}
           <meta itemProp="priceCurrency" content="BDT" />
-          <meta itemProp="price" content={String(p.price)} />
-          <link itemProp="availability" href="https://schema.org/InStock" />
+          <meta itemProp="price" content={String(Number(p.price || 0))} />
+          <link
+            itemProp="availability"
+            href={
+              inStock
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock"
+            }
+          />
+          <link itemProp="url" href={href} />
+          {p.condition && (
+            <link
+              itemProp="itemCondition"
+              href={`https://schema.org/${p.condition}`}
+            />
+          )}
         </div>
 
-        {/* CTA */}
         <button
+          type="button"
           onClick={() =>
             addToCart({
               id: String(p.id),

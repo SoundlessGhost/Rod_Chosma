@@ -2,7 +2,7 @@
 export const runtime = "nodejs";
 
 import prisma from "@/lib/prisma";
-import ProductSectionsClient from "../_components/ProductSectionsClient";
+import ProductSectionsClient from "../app/(store)/_components/ProductSectionsClient";
 
 export const revalidate = 300;
 

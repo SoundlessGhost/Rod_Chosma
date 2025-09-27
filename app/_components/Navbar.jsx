@@ -1,17 +1,28 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import Link from "next/link";
 import Image from "next/image";
 import MobileNav from "./MobileNav";
 import CartSheet from "../../components/CartSheet";
 
-const utilityLinks = ["PRODUCT", "ABOUT", "Catalog", "Customer Care"];
+const utilityLinks = [
+  { label: "PRODUCT", href: "/" },
+  {
+    label: "ABOUT",
+    href: "/https://www.google.com/search?client=safari&sca_esv=fd496c6a494bc8db&hl=en-bd&cs=0&output=search&kgmid=/g/11mr20g365&q=Rod+Chosma&shndl=30&source=sh/x/loc/act/m1/3&kgs=9dab9cdcb53c5be8&shem=shrtsdl&utm_source=shrtsdl,sh/x/loc/act/m1/3",
+  },
+  { label: "Catalog", href: "/catalog.pdf" }, // open in new tab
+  { label: "Care", href: "/care" },
+];
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 text-white">
-        {/* Navbar */}
         <div className="border-b border-white/10 bg-black backdrop-blur">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.35em]">
             {/* Logo */}
@@ -22,7 +33,7 @@ const Navbar = () => {
               <span className="font-bold tracking-[0.2em] text-xl font-facebook text-amber-400 inline-flex items-center">
                 <span className="w-8 h-8 mr-2 flex items-center justify-center shadow-md">
                   <Image
-                    src="/Brand/logo.png" // from public folder
+                    src="/Brand/logo.png"
                     alt="RodChosma Logo"
                     width={32}
                     height={32}
@@ -36,16 +47,37 @@ const Navbar = () => {
             {/* Right utilities */}
             <div className="flex items-center justify-between gap-3">
               <div className="hidden md:flex items-center gap-4 text-[9px] text-white/70">
-                {utilityLinks.map((item) => (
-                  <Link
-                    key={item}
-                    className="transition-colors duration-200 hover:text-white"
-                    href="#"
-                  >
-                    {item}
-                  </Link>
-                ))}
+                {utilityLinks.map((item) => {
+                  const isActive = pathname === item.href;
+                  const openInNewTab =
+                    item.label === "Catalog" || item.href.endsWith(".pdf");
+
+                  const baseClass =
+                    "transition-colors font-bold text-[12px] duration-200 " +
+                    (isActive ? "text-amber-400" : "");
+
+                  return openInNewTab ? (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={baseClass}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className={baseClass}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </div>
+
               {/* Mobile nav */}
               <div className="flex items-center">
                 <div className="md:hidden">
@@ -58,8 +90,8 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Spacer div: header height  */}
-      <div className="h-[80px]" />
+      {/* Spacer */}
+      <div className="h-[60px]" />
     </>
   );
 };

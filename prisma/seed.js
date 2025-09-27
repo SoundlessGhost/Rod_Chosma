@@ -7,7 +7,7 @@ const productCategories = [
     title: "Best Sellers",
     products: [
       {
-        name: "Penguin",
+        name: "Kana Kukka",
         price: 1500,
         image: "/colourful-sunglass/1a.jpeg",
         secondaryImages: [
@@ -59,7 +59,7 @@ const productCategories = [
         sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
-        name: "Penguin",
+        name: "Kana Kukka",
         price: 1500,
         image: "/colourful-sunglass/5a.jpeg",
         secondaryImages: [
@@ -163,7 +163,7 @@ const productCategories = [
         sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
-        name: "Kana Kukka",
+        name: "Pan Kouri",
         price: 1500,
         image: "/colourful-sunglass/13a.jpeg",
         secondaryImages: [
@@ -273,7 +273,7 @@ const productCategories = [
         sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
-        name: "Sunglass Box",
+        name: "Wooden Sunglass Box",
         price: 1500,
         image: "/special/box.jpeg",
         secondaryImages: ["/special/box1.jpeg", "/special/box1.jpeg"],
@@ -283,7 +283,7 @@ const productCategories = [
         sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
-        name: "Pankouri",
+        name: "Lokkhi Pecha",
         price: 1300,
         image: "/white-sunglasses/1.jpeg",
         secondaryImages: [
@@ -335,7 +335,7 @@ const productCategories = [
         sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
-        name: "Kana Kukka",
+        name: "Pan Kouri",
         price: 1300,
         image: "/white-sunglasses/5.jpeg",
         secondaryImages: [
@@ -374,7 +374,7 @@ const productCategories = [
         sizes: ["XS", "S", "M", "L", "XL"],
       },
       {
-        name: "Kana Kukka",
+        name: "Pan Kouri",
         price: 1300,
         image: "/white-sunglasses/8.jpeg",
         secondaryImages: [

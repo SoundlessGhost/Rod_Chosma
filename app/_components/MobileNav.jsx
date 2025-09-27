@@ -15,17 +15,19 @@ import { Menu, ChevronRight, Handbag, HatGlasses } from "lucide-react";
 
 const topLinks = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
-  { href: "/about", label: "About" },
-  { href: "/store-locator", label: "Catalog" },
+  { href: "/", label: "Product" },
+  {
+    href: "/https://www.google.com/search?client=safari&sca_esv=fd496c6a494bc8db&hl=en-bd&cs=0&output=search&kgmid=/g/11mr20g365&q=Rod+Chosma&shndl=30&source=sh/x/loc/act/m1/3&kgs=9dab9cdcb53c5be8&shem=shrtsdl&utm_source=shrtsdl,sh/x/loc/act/m1/3",
+    label: "About",
+  },
+  { href: "/catalog.pdf", label: "Catalog" },
 ];
 
 const browseLinks = [{ href: "/help", label: "Customer Help" }];
 
 const socialLinks = [
-  { href: "https://facebook.com", label: "Facebook" },
-  { href: "https://twitter.com", label: "Twitter" },
-  { href: "https://instagram.com", label: "Instagram" },
+  { href: "https://www.facebook.com/rod.chosma.9", label: "Facebook" },
+  { href: "https://www.instagram.com/rod_chosma/?__pwa=1", label: "Instagram" },
 ];
 
 export default function MobileNav() {
@@ -72,18 +74,38 @@ export default function MobileNav() {
         <div className="overflow-y-auto">
           {/* top links — dense rows, glass look */}
           <nav aria-label="Categories" className="divide-y divide-white/10">
-            {topLinks.map((l) => (
-              <SheetClose asChild key={l.href}>
-                <Link
-                  href={l.href}
-                  className="flex items-center justify-between px-5 py-3 text-[15px]
-                             bg-white/0 hover:bg-white/10 transition rounded-none"
-                >
-                  <span className="text-white">{l.label}</span>
-                  <ChevronRight size={18} className="text-white/40" />
-                </Link>
-              </SheetClose>
-            ))}
+            {topLinks.map((l, i) => {
+              const isCatalog = l.label === "Catalog"; // detect catalog link
+
+              if (isCatalog) {
+                return (
+                  <a
+                    key={i}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-5 py-3 text-[15px]
+                       bg-white/0 hover:bg-white/10 transition rounded-none"
+                  >
+                    <span className="text-white">{l.label}</span>
+                    <ChevronRight size={18} className="text-white/40" />
+                  </a>
+                );
+              }
+
+              return (
+                <SheetClose asChild key={i}>
+                  <Link
+                    href={l.href}
+                    className="flex items-center justify-between px-5 py-3 text-[15px]
+                       bg-white/0 hover:bg-white/10 transition rounded-none"
+                  >
+                    <span className="text-white">{l.label}</span>
+                    <ChevronRight size={18} className="text-white/40" />
+                  </Link>
+                </SheetClose>
+              );
+            })}
           </nav>
 
           {/* sections */}
@@ -94,8 +116,8 @@ export default function MobileNav() {
                 BROWSE
               </h4>
               <ul className="space-y-1">
-                {browseLinks.map((l) => (
-                  <li key={l.href}>
+                {browseLinks.map((l, i) => (
+                  <li key={i}>
                     <SheetClose asChild>
                       <Link
                         href={l.href}
@@ -117,7 +139,7 @@ export default function MobileNav() {
               <div className="text-[15px] text-white/90">
                 Call us{" "}
                 <span className="text-red-500 font-medium hover:underline">
-                  01794951003
+                  01713735888, 01717018185
                 </span>
               </div>
             </section>
@@ -128,8 +150,8 @@ export default function MobileNav() {
                 SOCIAL
               </h4>
               <ul className="space-y-1">
-                {socialLinks.map((l) => (
-                  <li key={l.href}>
+                {socialLinks.map((l, i) => (
+                  <li key={i}>
                     <a
                       href={l.href}
                       target="_blank"
@@ -149,7 +171,7 @@ export default function MobileNav() {
         <div className="px-5 py-4 border-t border-white/10 bg-black/70 backdrop-blur-md">
           <SheetClose asChild>
             <Link
-              href="/products"
+              href="/"
               className="inline-flex items-center justify-center w-full rounded-md
                          bg-red-600 px-5 py-2.5 text-white text-[15px] font-medium
                          hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/30"
