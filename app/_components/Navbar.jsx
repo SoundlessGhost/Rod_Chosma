@@ -8,13 +8,13 @@ import MobileNav from "./MobileNav";
 import CartSheet from "../../components/CartSheet";
 
 const utilityLinks = [
-  { label: "PRODUCT", href: "/" },
+  { label: "Product", href: "/" },
   {
-    label: "ABOUT",
-    href: "/https://www.google.com/search?client=safari&sca_esv=fd496c6a494bc8db&hl=en-bd&cs=0&output=search&kgmid=/g/11mr20g365&q=Rod+Chosma&shndl=30&source=sh/x/loc/act/m1/3&kgs=9dab9cdcb53c5be8&shem=shrtsdl&utm_source=shrtsdl,sh/x/loc/act/m1/3",
+    label: "About",
+    href: "https://www.google.com/search?q=rod+chosma+dhaka&oq=Rod+Chosma+Dhaka&gs_lcrp=EgZjaHJvbWUqDAgAECMYJxiABBiKBTIMCAAQIxgnGIAEGIoFMgcIARAAGIAEMgcIAhAAGO8FMgcIAxAAGO8FMgoIBBAAGKIEGIkFMgcIBRAAGO8FMgYIBhBFGD0yBggHEEUYPdIBBzU2NGowajmoAgawAgHxBdKiWsmuX9dK&sourceid=chrome&ie=UTF-8",
   },
-  { label: "Catalog", href: "/catalog.pdf" }, // open in new tab
-  { label: "Care", href: "/care" },
+  { label: "Catalog", href: "/catalog.pdf" },
+  { label: "Care", href: "/contact" },
 ];
 
 const Navbar = () => {
@@ -49,8 +49,12 @@ const Navbar = () => {
               <div className="hidden md:flex items-center gap-4 text-[9px] text-white/70">
                 {utilityLinks.map((item) => {
                   const isActive = pathname === item.href;
+
+                  // এখন About আর Catalog দুইটাই নতুন ট্যাবে খোলার জন্য detect করছি
                   const openInNewTab =
-                    item.label === "Catalog" || item.href.endsWith(".pdf");
+                    item.label === "Catalog" ||
+                    item.href.endsWith(".pdf") ||
+                    item.label === "ABOUT";
 
                   const baseClass =
                     "transition-colors font-bold text-[12px] duration-200 " +

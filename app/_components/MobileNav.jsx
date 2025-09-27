@@ -17,14 +17,13 @@ const topLinks = [
   { href: "/", label: "Home" },
   { href: "/", label: "Product" },
   {
-    href: "/https://www.google.com/search?client=safari&sca_esv=fd496c6a494bc8db&hl=en-bd&cs=0&output=search&kgmid=/g/11mr20g365&q=Rod+Chosma&shndl=30&source=sh/x/loc/act/m1/3&kgs=9dab9cdcb53c5be8&shem=shrtsdl&utm_source=shrtsdl,sh/x/loc/act/m1/3",
+    href: "https://www.google.com/search?q=rod+chosma+dhaka&oq=Rod+Chosma+Dhaka&gs_lcrp=EgZjaHJvbWUqDAgAECMYJxiABBiKBTIMCAAQIxgnGIAEGIoFMgcIARAAGIAEMgcIAhAAGO8FMgcIAxAAGO8FMgoIBBAAGKIEGIkFMgcIBRAAGO8FMgYIBhBFGD0yBggHEEUYPdIBBzU2NGowajmoAgawAgHxBdKiWsmuX9dK&sourceid=chrome&ie=UTF-8",
     label: "About",
   },
   { href: "/catalog.pdf", label: "Catalog" },
 ];
 
-const browseLinks = [{ href: "/help", label: "Customer Help" }];
-
+const browseLinks = [{ href: "/contact", label: "Customer Help" }];
 const socialLinks = [
   { href: "https://www.facebook.com/rod.chosma.9", label: "Facebook" },
   { href: "https://www.instagram.com/rod_chosma/?__pwa=1", label: "Instagram" },
@@ -75,9 +74,9 @@ export default function MobileNav() {
           {/* top links — dense rows, glass look */}
           <nav aria-label="Categories" className="divide-y divide-white/10">
             {topLinks.map((l, i) => {
-              const isCatalog = l.label === "Catalog"; // detect catalog link
+              const isExternal = l.label === "About" || l.label === "Catalog"; // detect links to open in new tab
 
-              if (isCatalog) {
+              if (isExternal) {
                 return (
                   <a
                     key={i}
@@ -85,7 +84,7 @@ export default function MobileNav() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between px-5 py-3 text-[15px]
-                       bg-white/0 hover:bg-white/10 transition rounded-none"
+                     bg-white/0 hover:bg-white/10 transition rounded-none"
                   >
                     <span className="text-white">{l.label}</span>
                     <ChevronRight size={18} className="text-white/40" />
@@ -98,7 +97,7 @@ export default function MobileNav() {
                   <Link
                     href={l.href}
                     className="flex items-center justify-between px-5 py-3 text-[15px]
-                       bg-white/0 hover:bg-white/10 transition rounded-none"
+                     bg-white/0 hover:bg-white/10 transition rounded-none"
                   >
                     <span className="text-white">{l.label}</span>
                     <ChevronRight size={18} className="text-white/40" />

@@ -30,7 +30,7 @@ export default async function ProductIdPage({ params }) {
 
   const product = await getProduct(id);
 
-  if (!product) return notFound(); // ✅ shows app/not-found.js
+  if (!product) return notFound();
 
   return (
     <div className="container mx-auto px-4 py-10">
